@@ -28,6 +28,7 @@ public class ModalWindow {
         }
     }
     private Scene makeScene(String string, int width, int height, String resource) throws IOException {
+
         FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource(resource));
         Scene scene = new Scene(loader.load(), width, height);
         if (string.equals("Справка")) {
