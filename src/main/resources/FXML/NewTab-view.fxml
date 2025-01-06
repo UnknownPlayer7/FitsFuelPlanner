@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<AnchorPane fx:id="anchorPaneBreakfast" minHeight="0.0" minWidth="0.0" prefHeight="377.0" prefWidth="735.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NewTabController">
+   <children>
+      <Button layoutX="14.0" layoutY="293.0" mnemonicParsing="false" onAction="#ok" prefHeight="25.0" prefWidth="79.0" text="Добавить" />
+      <TableView fx:id="table" layoutY="9.0" prefHeight="284.0" prefWidth="735.0">
+         <placeholder>
+            <Label style="-fx-font-size: 60px;" text="🏋" />
+         </placeholder>
+         <columns>
+            <TableColumn fx:id="nameColumn" prefWidth="207.0" text="Название" />
+            <TableColumn fx:id="carbColumn" minWidth="0.0" prefWidth="99.0" text="Углеводы" />
+            <TableColumn fx:id="proteinColumn" prefWidth="99.0" text="Белки" />
+            <TableColumn fx:id="fatColumn" prefWidth="99.0" text="Жиры" />
+            <TableColumn fx:id="energyColumn" prefWidth="98.0" text="Ккал" />
+            <TableColumn fx:id="amountOfProduct" prefWidth="98.0" text="Кол-во" />
+         </columns>
+      </TableView>
+      <GridPane layoutX="-1.0" layoutY="326.0" prefHeight="45.0" prefWidth="737.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <ComboBox fx:id="proteinBox" prefHeight="73.0" prefWidth="185.0" promptText="Кол-во белков: 0" />
+            <ComboBox fx:id="carbBox" prefHeight="45.0" prefWidth="184.0" promptText="Кол-во углеводов: 0" GridPane.columnIndex="1" />
+            <ComboBox fx:id="fatBox" prefHeight="55.0" prefWidth="242.0" promptText="Кол-во жиров: 0" GridPane.columnIndex="2" />
+            <Button fx:id="amountOfEnergyLabel" mnemonicParsing="false" prefHeight="77.0" prefWidth="245.0" text="Ккал: 0" textAlignment="LEFT" GridPane.columnIndex="3" />
+         </children>
+      </GridPane>
+   </children>
+</AnchorPane>

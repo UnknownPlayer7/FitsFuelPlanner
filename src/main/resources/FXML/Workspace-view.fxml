@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<AnchorPane prefHeight="482.0" prefWidth="737.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="WorkspaceController">
+   <children>
+      <SplitPane dividerPositions="0.8876651982378855" layoutY="27.0" orientation="VERTICAL" prefHeight="456.0" prefWidth="737.0">
+        <items>
+            <TabPane fx:id="tabPane" prefHeight="416.0" prefWidth="735.0" tabClosingPolicy="UNAVAILABLE">
+              <tabs>
+                  <Tab fx:id="addTab" closable="false" text="+" />
+              </tabs>
+            </TabPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="141.0" prefWidth="603.0">
+               <children>
+                  <GridPane layoutX="-1.0" prefHeight="45.0" prefWidth="737.0">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label fx:id="proteinLabelMain" prefHeight="57.0" prefWidth="227.0" text="  Общее кол-во белков: 0" />
+                        <Label fx:id="carbLabelMain" prefHeight="57.0" prefWidth="227.0" text="  Общее кол-во углеводов: 0" GridPane.columnIndex="1" />
+                        <Label fx:id="fatLabelMain" prefHeight="57.0" prefWidth="227.0" text="  Общее кол-во жиров: 0" GridPane.columnIndex="2" />
+                        <Label fx:id="amountOfEnergyLabelMain" prefHeight="57.0" prefWidth="227.0" text="  Общее кол-во ккал: 0" GridPane.columnIndex="3" />
+                     </children>
+                  </GridPane>
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+      <MenuBar fx:id="menuBar" layoutY="2.0" prefHeight="25.0" prefWidth="737.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="Файл">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#save" text="Сохранить" />
+                  <MenuItem mnemonicParsing="false" onAction="#savePDF" text="Сохранить в PDF" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Действия">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#toMenu" text="На главную" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </children>
+</AnchorPane>
