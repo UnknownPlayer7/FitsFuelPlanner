@@ -68,7 +68,7 @@ public class MainMenuController implements Initializable {
         clientBox.setButtonCell(Cell.getListCell());
         list.add(0, NewClient.getInstance());
         clientBox.setValue(clientBox.getItems().get(0));
-        clientBox.setStyle("-fx-font-size: 18px; -fx-font-family: 'System';");
+        clientBox.setStyle("-fx-font-size: 12px; -fx-font-family: 'System';");
     }
 
     @Override
