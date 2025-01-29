@@ -54,7 +54,7 @@
             <Menu mnemonicParsing="false" text="Файл">
                <items>
                   <MenuItem mnemonicParsing="false" onAction="#saveProduct" text="Сохранить" />
-                  <MenuItem mnemonicParsing="false" text="Добавить в пакет" />
+                  <MenuItem mnemonicParsing="false" text="Добавить в пакет" visible="false" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Помощь">
