@@ -58,7 +58,7 @@ public class NewTabController implements Initializable {
     void ok(ActionEvent event) {
         Platform.runLater(() ->{
             ModalWindow addWindow = new ModalWindow();
-            addWindow.newWindow(420,324,"Картотека","/FXML/Library-view.fxml",
+            addWindow.newWindow(420,380,"Картотека","/FXML/Library-view.fxml",
                     "/images/iconLib.png");
         });
 
