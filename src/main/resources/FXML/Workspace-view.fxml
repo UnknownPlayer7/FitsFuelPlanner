@@ -60,6 +60,12 @@
               <MenuItem mnemonicParsing="false" onAction="#toMenu" text="На главную" />
             </items>
           </Menu>
+            <Menu mnemonicParsing="false" text="Настройки">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#setWallpaperPDF" text="Изменить фон PDF файла" />
+                  <MenuItem mnemonicParsing="false" onAction="#setWallpaperMainMenu" text="Изменить фон главного меню" />
+              </items>
+            </Menu>
         </menus>
       </MenuBar>
    </children>

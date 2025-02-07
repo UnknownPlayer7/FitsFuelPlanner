@@ -11,10 +11,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -51,7 +49,7 @@ public class MainMenuController implements Initializable {
     }
 
     private void setWallpaper(){
-        String imagePath = "/images/WallPaperMainMenu.jpg";
+        String imagePath = "/images/WallpaperMainMenu.jpg";
         Image image = new Image(String.valueOf(MainMenuController.class.getResource(imagePath)));
         wallpaper.setImage(image);
         wallpaper.setFitHeight(wallpaper.getScene().getHeight());

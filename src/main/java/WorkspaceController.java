@@ -10,10 +10,16 @@ import javafx.scene.control.Label;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -156,6 +162,34 @@ public class WorkspaceController extends NewTabController implements Initializab
             System.out.println(exc);
         }
 
+    }
+
+    @FXML
+    void setWallpaperPDF(ActionEvent event) {
+        try{
+            Path oldPicturePath = Paths.get(this.getClass().getResource("/images/WallpaperPDF.jpg").toURI());
+            FileChooser fileChooser = new FileChooser();
+            File file = fileChooser.showOpenDialog(menuBar.getScene().getWindow());
+            if(file != null && file.exists())
+                Files.copy(file.toPath(), oldPicturePath, StandardCopyOption.REPLACE_EXISTING);
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @FXML
+    void setWallpaperMainMenu(ActionEvent event) {
+        try{
+            Path oldPicture = Paths.get(this.getClass().getResource("images/WallpaperMainMenu.jpg").toURI());
+            FileChooser fileChooser = new FileChooser();
+            File file = fileChooser.showOpenDialog(menuBar.getScene().getWindow());
+            if(file != null && file.exists()) {
+                Files.copy(file.toPath(),oldPicture,StandardCopyOption.REPLACE_EXISTING);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
 

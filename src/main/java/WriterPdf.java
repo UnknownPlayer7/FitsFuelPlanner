@@ -206,7 +206,7 @@ public class WriterPdf {
             Image image = null;
 
             try {
-                image = Image.getInstance(String.valueOf(WriterPdf.class.getResource("/images/Var1New.jpg")));
+                image = Image.getInstance(String.valueOf(WriterPdf.class.getResource("/images/WallpaperPDF.jpg")));
                 image.setAbsolutePosition(0f,0f);
                 image.scaleAbsolute(document.getPageSize().getWidth(),document.getPageSize().getHeight());
             } catch (IOException e) {
