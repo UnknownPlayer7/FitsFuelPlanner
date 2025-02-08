@@ -1,12 +1,14 @@
 import com.lowagie.text.Font;
 import com.lowagie.text.Image;
 import com.lowagie.text.*;
+import com.lowagie.text.alignment.VerticalAlignment;
 import com.lowagie.text.pdf.*;
 
 import java.awt.*;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class WriterPdf {
@@ -100,6 +102,7 @@ public class WriterPdf {
                 cell.setVerticalAlignment(5);
                 cell.setHorizontalAlignment(1);
                 table.addCell(cell);
+                setBorderWidth(table);
                 document.add(table);
             }
             writeCommonNutrition(document);
@@ -112,6 +115,40 @@ public class WriterPdf {
 
 
         return true;
+    }
+
+    private void setBorderWidth(PdfPTable table) {
+
+        try{
+            ArrayList<PdfPRow> rows = table.getRows();
+            PdfPCell[] cells;
+            PdfPCell cell;
+            float borderWidth = 2f;
+            for (int rowNumber = 0; rowNumber < rows.size(); rowNumber++) {
+                cells = rows.get(rowNumber).getCells();
+                PdfPCell rightCell = null;
+                for (int cellNumber = 0; cellNumber < cells.length; cellNumber++) {
+                    cell = cells[cellNumber];
+                    if(cell != null) {
+                        rightCell = cell;
+                        if(rowNumber == 0) cells[cellNumber].setBorderWidthTop(borderWidth);
+                        if(rowNumber == rows.size() - 1) cells[cellNumber].setBorderWidthBottom(borderWidth);
+                        if(cellNumber == 0) cells[cellNumber].setBorderWidthLeft(borderWidth);
+                    } else if (rowNumber == rows.size() - 1) {
+                        for (int i = rows.size() - 1; i >= 0 ; i--) {
+                            if(rows.get(i).getCells()[cellNumber] != null) {
+                                rows.get(i).getCells()[cellNumber].setBorderWidthBottom(borderWidth);
+                                break;
+                            }
+                        }
+                    }
+                    if(cellNumber == cells.length - 1 && rightCell != null) rightCell.setBorderWidthRight(borderWidth);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
     }
 
     private void setTableFactory(PdfPTable table,float width){
@@ -164,8 +201,10 @@ public class WriterPdf {
         }
         for(String string: commonNutrition){
             cell = new PdfPCell(new Phrase(Finder.findNumber(string), font12_BOLD));
+            cell.setFixedHeight(20f);
             table.addCell(cell);
         }
+        setBorderWidth(table);
         document.add(table);
 
     }
