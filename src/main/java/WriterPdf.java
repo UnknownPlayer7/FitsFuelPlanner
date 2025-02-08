@@ -15,18 +15,21 @@ public class WriterPdf {
     private final float[] columnDefaultSize = {90,30,30,30,30,30};
     private final ArrayList<String> titles;
     private final ArrayList<String> commonNutrition;
-    private final Font font12 = FontFactory.getFont(FontFactory.TIMES_ITALIC,12);
-    private final Font rusFont12 = FontFactory.getFont("rusFont", BaseFont.IDENTITY_H, true, 12);
-    private final Font rusFont14 = FontFactory.getFont("rusFont", BaseFont.IDENTITY_H, true, 14);
-    private final Font rusFont16 = FontFactory.getFont("rusFont", BaseFont.IDENTITY_H, true, 16);
-    private final Font rusFont_RED = FontFactory.getFont("rusFont", BaseFont.IDENTITY_H, true, 12,0,Color.RED.darker());
-    private final Font rusFont_GREEN = FontFactory.getFont("rusFont", BaseFont.IDENTITY_H, true, 12,0,Color.GREEN.darker());
-    private final Font rusFont_CYAN = FontFactory.getFont("rusFont", BaseFont.IDENTITY_H, true, 12,0,Color.CYAN.darker());
-    private final Font rusFont_BLUE = FontFactory.getFont("rusFont", BaseFont.IDENTITY_H, true, 12,0,Color.BLUE.darker());
+    private final Font font12_BOLD = FontFactory.getFont(FontFactory.TIMES_BOLD,12);
+    private final Font rusFont12_BOLD = FontFactory.getFont("rusFont_BOLD", BaseFont.IDENTITY_H, true, 12);
+    private final Font rusFont12_LIGHT = FontFactory.getFont("rusFont_LIGHT", BaseFont.IDENTITY_H, true, 12);
+    private final Font rusFont14_BOLD = FontFactory.getFont("rusFont_BOLD", BaseFont.IDENTITY_H, true, 14);
+    private final Font rusFont16_BOLD = FontFactory.getFont("rusFont_BOLD", BaseFont.IDENTITY_H, true, 16);
+    private final Font rusFont_RED = FontFactory.getFont("rusFont_LIGHT", BaseFont.IDENTITY_H, true, 12,0,Color.RED);
+    private final Font rusFont_GREEN = FontFactory.getFont("rusFont_LIGHT", BaseFont.IDENTITY_H, true, 12,0,Color.GREEN);
+    private final Font rusFont_YELLOW = FontFactory.getFont("rusFont_LIGHT", BaseFont.IDENTITY_H, true, 12,0,Color.YELLOW);
+    private final Font rusFont_BLUE = FontFactory.getFont("rusFont_LIGHT", BaseFont.IDENTITY_H, true, 12,0,Color.BLUE);
 
     //Добавляем русский шрифт в регистр класса FontFactory
     static{
-        FontFactory.register( String.valueOf(WriterPdf.class.getResource("/resources/fonts/Noto_Sans_Rus/Slavik.otf")), "rusFont");
+        FontFactory.register( String.valueOf(WriterPdf.class.getResource("fonts/Noto_Sans_Rus/static/NotoSans-Light.ttf")), "rusFont_LIGHT");
+        FontFactory.register( String.valueOf(WriterPdf.class.getResource("fonts/Noto_Sans_Rus/static/NotoSans-Bold.ttf")), "rusFont_BOLD");
+
     }
 
     WriterPdf(String name,Client client,ArrayList<String> titles,ArrayList<String> commonNutrition){
@@ -53,7 +56,7 @@ public class WriterPdf {
                 table = new PdfPTable(columnDefaultSize);
                 setTableFactory(table,pageWidth);
                 if(titles != null){
-                    cell = new PdfPCell(new Phrase(titles.get(i-1),rusFont16));
+                    cell = new PdfPCell(new Phrase(titles.get(i-1), rusFont16_BOLD));
                     cell.setColspan(columnDefaultSize.length);
                     cell.setHorizontalAlignment(Element.ALIGN_CENTER);
                     cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -61,39 +64,39 @@ public class WriterPdf {
                 }
                 fillColumnNames(table);
                 for(Goods product: productMap.get(i)){
-                    cell = new PdfPCell(new Phrase(product.getName(), rusFont12));
+                    cell = new PdfPCell(new Phrase(product.getName(), rusFont12_BOLD));
                     table.addCell(cell);
                     if(product.getTypeOfCarb().equals("Simple")){
-                        cell.setBackgroundColor(Color.CYAN.darker());
+                        cell.setBackgroundColor(Color.YELLOW.darker());
                     }else cell.setBackgroundColor(Color.BLUE.darker());
-                    cell.setPhrase(new Phrase(String.valueOf(product.getCarb()),font12));
+                    cell.setPhrase(new Phrase(String.valueOf(product.getCarb()), font12_BOLD));
                     table.addCell(cell);
                     if(product.getTypeOfProtein().equals("Animal")){
                         cell.setBackgroundColor(Color.RED.darker());
                     }else cell.setBackgroundColor(Color.GREEN.darker());
-                    cell.setPhrase(new Phrase(String.valueOf(product.getProtein()),font12));
+                    cell.setPhrase(new Phrase(String.valueOf(product.getProtein()), font12_BOLD));
                     table.addCell(cell);
                     if(product.getTypeOfFat().equals("Animal")){
                         cell.setBackgroundColor(Color.RED.darker());
                     }else cell.setBackgroundColor(Color.GREEN.darker());
-                    cell.setPhrase(new Phrase(String.valueOf(product.getFat()),font12));
+                    cell.setPhrase(new Phrase(String.valueOf(product.getFat()), font12_BOLD));
                     table.addCell(cell);
-                    cell = new PdfPCell(new Phrase(String.valueOf(product.getAmountOfEnergy()),font12));
+                    cell = new PdfPCell(new Phrase(String.valueOf(product.getAmountOfEnergy()), font12_BOLD));
                     table.addCell(cell);
-                    cell = new PdfPCell(new Phrase(String.valueOf(product.getAmountOfProduct()),font12));
+                    cell = new PdfPCell(new Phrase(String.valueOf(product.getAmountOfProduct()), font12_BOLD));
 
                     table.addCell(cell);
                 }
-                cell = new PdfPCell(new Phrase("Итого:", rusFont14));
+                cell = new PdfPCell(new Phrase("Итого:", rusFont14_BOLD));
 
                 cell.setVerticalAlignment(5);
                 cell.setHorizontalAlignment(1);
                 table.addCell(cell);
                 for(String string: nutritionMap.get(i)){
-                    cell = new PdfPCell(new Phrase(string,font12));
+                    cell = new PdfPCell(new Phrase(string, font12_BOLD));
                     table.addCell(cell);
                 }
-                cell = new PdfPCell(new Phrase("-", rusFont12));
+                cell = new PdfPCell(new Phrase("-", rusFont12_BOLD));
                 cell.setVerticalAlignment(5);
                 cell.setHorizontalAlignment(1);
                 table.addCell(cell);
@@ -124,44 +127,43 @@ public class WriterPdf {
         PdfPCell cell = new PdfPCell();
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-        cell.setPhrase(new Phrase("Продукты",rusFont14));
+        cell.setPhrase(new Phrase("Продукты", rusFont14_BOLD));
         table.addCell(cell);
-        cell.setPhrase(new Phrase("Углеводы",rusFont14));
+        cell.setPhrase(new Phrase("Углеводы", rusFont14_BOLD));
         table.addCell(cell);
-        cell.setPhrase(new Phrase("Белки",rusFont14));
+        cell.setPhrase(new Phrase("Белки", rusFont14_BOLD));
         table.addCell(cell);
-        cell.setPhrase(new Phrase("Жиры",rusFont14));
+        cell.setPhrase(new Phrase("Жиры", rusFont14_BOLD));
         table.addCell(cell);
-        cell.setPhrase(new Phrase("Ккал",rusFont14));
+        cell.setPhrase(new Phrase("Ккал", rusFont14_BOLD));
         table.addCell(cell);
-        cell.setPhrase(new Phrase("Кол-во в сухом виде(г)",rusFont14));
+        cell.setPhrase(new Phrase("Кол-во в сухом виде(г)", rusFont14_BOLD));
         table.addCell(cell);
     }
 
     private void writeIntroduction(Document document){
-        document.add(new Paragraph("Для справки:", rusFont12));
-        document.add(buildPhrase("1) ","Бордовый цвет"," - элементы животного происхождения;",rusFont_RED));
+        document.add(buildPhrase("1) ","Красный цвет"," - элементы животного происхождения;",rusFont_RED));
         document.add(buildPhrase("2) ","Зеленый цвет"," - элементы растительного происхождения;",rusFont_GREEN));
         document.add(buildPhrase("3) ","Синий цвет"," - элементы относящийся к полисахаридам, инимы словами сложные углеводы;",rusFont_BLUE));
-        document.add(buildPhrase("4) ","Васильковый цвет"," - элементы относящийся к моносахаридам, т.е. простые углеводы;",rusFont_CYAN));
+        document.add(buildPhrase("4) ","Желтый цвет"," - элементы относящийся к моносахаридам, т.е. простые углеводы;", rusFont_YELLOW));
     }
 
     private void writeCommonNutrition(Document document){
         PdfPTable table = new PdfPTable(new float[]{72,30,30,30,30});
         setTableFactory(table,document.getPageSize().getWidth());
-        PdfPCell cell = new PdfPCell(new Phrase("Итого: ",rusFont14));
+        PdfPCell cell = new PdfPCell(new Phrase("Итого: ", rusFont14_BOLD));
         cell.setRowspan(2);
         cell.setVerticalAlignment(5);
         cell.setHorizontalAlignment(1);
         table.addCell(cell);
 
         for(String string: commonNutrition){
-            cell = new PdfPCell(new Phrase(Finder.deleteNumber(string), rusFont14));
+            cell = new PdfPCell(new Phrase(Finder.deleteNumber(string), rusFont14_BOLD));
             table.addCell(cell);
 
         }
         for(String string: commonNutrition){
-            cell = new PdfPCell(new Phrase(Finder.findNumber(string),font12));
+            cell = new PdfPCell(new Phrase(Finder.findNumber(string), font12_BOLD));
             table.addCell(cell);
         }
         document.add(table);
@@ -169,9 +171,9 @@ public class WriterPdf {
     }
 
     private Paragraph buildPhrase(String first,String second,String third, Font painter){
-        Paragraph paragraph = new Paragraph(new Chunk(first, rusFont12));
+        Paragraph paragraph = new Paragraph(new Chunk(first, rusFont12_LIGHT));
         paragraph.add(new Chunk(second,painter));
-        paragraph.add(new Chunk(third, rusFont12));
+        paragraph.add(new Chunk(third, rusFont12_LIGHT));
         return paragraph;
     }
 
