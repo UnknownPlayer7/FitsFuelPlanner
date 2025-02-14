@@ -1,6 +1,5 @@
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 
@@ -81,17 +80,11 @@ public class AddProductController {
 
     @FXML
     void saveProduct(ActionEvent event) {
-
-        try{
-            Goods product = createProduct();
-            Save.save(product);
-            ModalWindow.getSaveSuccess();
-
-        }
-        catch(NumberFormatException exc){
-            System.out.println("Something went wrong: "+exc);
-        }
-
+        Goods product = createProduct();
+        if(Save.save(product))
+            NotificationManager.showSuccessfulInfo(InfoType.SUCCESSFUL_SAVE);
+        else
+            NotificationManager.showError(InfoType.ERROR_SAVE);
     }
 
     @FXML

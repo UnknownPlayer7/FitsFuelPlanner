@@ -1,3 +1,8 @@
+import de.schlichtherle.truezip.file.TArchiveDetector;
+import de.schlichtherle.truezip.file.TConfig;
+import de.schlichtherle.truezip.fs.archive.zip.JarDriver;
+import de.schlichtherle.truezip.fs.archive.zip.ZipDriver;
+import de.schlichtherle.truezip.socket.sl.IOPoolLocator;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -49,8 +54,8 @@ public class MainMenuController implements Initializable {
     }
 
     private void setWallpaper(){
-        String imagePath = "/images/WallpaperMainMenu.jpg";
-        Image image = new Image(String.valueOf(MainMenuController.class.getResource(imagePath)));
+        ResourceSupplier resourceSupplier = new ResourceSupplier();
+        Image image = resourceSupplier.getImage("WallpaperMainMenu.jpg");
         wallpaper.setImage(image);
         wallpaper.setFitHeight(wallpaper.getScene().getHeight());
         wallpaper.setFitWidth(wallpaper.getScene().getWidth());
@@ -69,9 +74,20 @@ public class MainMenuController implements Initializable {
         clientBox.setStyle("-fx-font-size: 12px; -fx-font-family: 'System';");
     }
 
+    private void setUpArchiveDetector() {
+        TConfig.get().setArchiveDetector(
+                new TArchiveDetector(
+                        TArchiveDetector.NULL,
+                        new Object[][] {
+                                { "jar", new JarDriver(IOPoolLocator.SINGLETON) },
+                                { "zip", new ZipDriver(IOPoolLocator.SINGLETON)},
+                        }));
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Platform.runLater(()->{
+            setUpArchiveDetector();
             ControllersArchive.setMainMenuController(this);
             setWallpaper();
             setComboBox();

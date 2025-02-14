@@ -1,34 +1,41 @@
 import com.lowagie.text.Font;
 import com.lowagie.text.Image;
 import com.lowagie.text.*;
-import com.lowagie.text.alignment.VerticalAlignment;
 import com.lowagie.text.pdf.*;
 
 import java.awt.*;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Properties;
 
 public class WriterPdf {
+    private static Color textColorInFrame;
+    private static Color borderColor;
+
     private final String name;
     private final Client client;
     private final float[] columnDefaultSize = {90,30,30,30,30,30};
     private final ArrayList<String> titles;
     private final ArrayList<String> commonNutrition;
-    private final Font font12_BOLD = FontFactory.getFont(FontFactory.TIMES_BOLD,12);
-    private final Font rusFont12_BOLD = FontFactory.getFont("rusFont_BOLD", BaseFont.IDENTITY_H, true, 12);
-    private final Font rusFont12_LIGHT = FontFactory.getFont("rusFont_LIGHT", BaseFont.IDENTITY_H, true, 12);
-    private final Font rusFont14_BOLD = FontFactory.getFont("rusFont_BOLD", BaseFont.IDENTITY_H, true, 14);
-    private final Font rusFont16_BOLD = FontFactory.getFont("rusFont_BOLD", BaseFont.IDENTITY_H, true, 16);
+    private final Font font12_BOLD = FontFactory.getFont(FontFactory.TIMES_BOLD,12,textColorInFrame);
+    private final Font rusFont12_BOLD = FontFactory.getFont("rusFont_BOLD", BaseFont.IDENTITY_H, true, 12,0, textColorInFrame);
+    private final Font rusFont12_LIGHT = FontFactory.getFont("rusFont_LIGHT", BaseFont.IDENTITY_H, true, 12,0, textColorInFrame);
+    private final Font rusFont14_BOLD = FontFactory.getFont("rusFont_BOLD", BaseFont.IDENTITY_H, true, 14,0, textColorInFrame);
+    private final Font rusFont16_BOLD = FontFactory.getFont("rusFont_BOLD", BaseFont.IDENTITY_H, true, 16,0, textColorInFrame);
     private final Font rusFont_RED = FontFactory.getFont("rusFont_LIGHT", BaseFont.IDENTITY_H, true, 12,0,Color.RED);
     private final Font rusFont_GREEN = FontFactory.getFont("rusFont_LIGHT", BaseFont.IDENTITY_H, true, 12,0,Color.GREEN);
     private final Font rusFont_YELLOW = FontFactory.getFont("rusFont_LIGHT", BaseFont.IDENTITY_H, true, 12,0,Color.YELLOW);
     private final Font rusFont_BLUE = FontFactory.getFont("rusFont_LIGHT", BaseFont.IDENTITY_H, true, 12,0,Color.BLUE);
 
-    //Добавляем русский шрифт в регистр класса FontFactory
     static{
+        ResourceSupplier resourceSupplier = new ResourceSupplier();
+        Properties properties = resourceSupplier.getProperties("PDF.config","/config/");
+        textColorInFrame = Color.decode(properties.get("textColorInFrame").toString());
+        borderColor = Color.decode(properties.get("borderColor").toString());
+
+        //Добавляем русский шрифт в регистр класса FontFactory
         FontFactory.register( String.valueOf(WriterPdf.class.getResource("fonts/Noto_Sans_Rus/static/NotoSans-Light.ttf")), "rusFont_LIGHT");
         FontFactory.register( String.valueOf(WriterPdf.class.getResource("fonts/Noto_Sans_Rus/static/NotoSans-Bold.ttf")), "rusFont_BOLD");
 
@@ -102,7 +109,7 @@ public class WriterPdf {
                 cell.setVerticalAlignment(5);
                 cell.setHorizontalAlignment(1);
                 table.addCell(cell);
-                setBorderWidth(table);
+                setBorderWidthAndColor(table);
                 document.add(table);
             }
             writeCommonNutrition(document);
@@ -117,7 +124,7 @@ public class WriterPdf {
         return true;
     }
 
-    private void setBorderWidth(PdfPTable table) {
+    private void setBorderWidthAndColor(PdfPTable table) {
 
         try{
             ArrayList<PdfPRow> rows = table.getRows();
@@ -130,6 +137,7 @@ public class WriterPdf {
                 for (int cellNumber = 0; cellNumber < cells.length; cellNumber++) {
                     cell = cells[cellNumber];
                     if(cell != null) {
+                        cell.setBorderColor(borderColor);
                         rightCell = cell;
                         if(rowNumber == 0) cells[cellNumber].setBorderWidthTop(borderWidth);
                         if(rowNumber == rows.size() - 1) cells[cellNumber].setBorderWidthBottom(borderWidth);
@@ -204,7 +212,7 @@ public class WriterPdf {
             cell.setFixedHeight(20f);
             table.addCell(cell);
         }
-        setBorderWidth(table);
+        setBorderWidthAndColor(table);
         document.add(table);
 
     }
@@ -244,16 +252,34 @@ public class WriterPdf {
         @Override
         public void onEndPage(PdfWriter writer, Document document) {
             PdfContentByte canvas = writer.getDirectContentUnder();
+            ResourceSupplier resourceSupplier = new ResourceSupplier();
             Image image = null;
-
             try {
-                image = Image.getInstance(String.valueOf(WriterPdf.class.getResource("/images/WallpaperPDF.jpg")));
-                image.setAbsolutePosition(0f,0f);
-                image.scaleAbsolute(document.getPageSize().getWidth(),document.getPageSize().getHeight());
+                image = Image.getInstance(resourceSupplier.getImageByteArray("WallpaperPDF.jpg"));
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                System.out.println("Exception! Can't set PDF image.");
             }
+            image.setAbsolutePosition(0f,0f);
+            image.scaleAbsolute(document.getPageSize().getWidth(),document.getPageSize().getHeight());
             canvas.addImage(image);
+        }
+    }
+
+    public static void setColorInFrame(String hexCodeColor) {
+        try {
+            WriterPdf.textColorInFrame = Color.decode(hexCodeColor);
+            NotificationManager.showSuccessfulInfo(InfoType.SUCCESSFUL_SETTING);
+        } catch (NumberFormatException e) {
+            NotificationManager.showError(InfoType.ERROR_SETTING);
+        }
+    }
+
+    public static void setBorderColor(String hexCodeColor) {
+        try {
+            WriterPdf.borderColor = Color.decode(hexCodeColor);
+            NotificationManager.showSuccessfulInfo(InfoType.SUCCESSFUL_SETTING);
+        } catch (NumberFormatException e) {
+            NotificationManager.showError(InfoType.ERROR_SETTING);
         }
     }
 }

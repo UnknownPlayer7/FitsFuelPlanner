@@ -35,24 +35,6 @@ public class ModalWindow {
             HelpController helpController = loader.getController();
             helpController.printHelpInfo();
         }
-        if (string.equals("Хранитель")){
-
-            HelpController helpController = loader.getController();
-            helpController.printInfo("Сохранено!");
-
-        }
         return scene;
-    }
-
-    public static void getSaveSuccess(){
-        ModalWindow infoWindow = new ModalWindow();
-        infoWindow.newWindow(201,63,"Хранитель","/FXML/Information-view.fxml",
-                "/images/iconInfo.png");
-    }
-
-    public static void getNameWriter(){
-        ModalWindow infoWindow = new ModalWindow();
-        infoWindow.newWindow(201,63,"Имя клиента","/FXML/EnteringNameController-view.fxml",
-                "/images/iconInfo.png");
     }
 }

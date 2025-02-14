@@ -1,11 +1,7 @@
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.List;
+import java.nio.charset.StandardCharsets;
 
 public class HelpController {
 
@@ -15,19 +11,13 @@ public class HelpController {
     private Label infoText;
 
     public void printHelpInfo() {
+        ResourceSupplier resourceSupplier = new ResourceSupplier();
         try{
-            URL resourceUrl = HelpController.class.getResource("/texts/Help.txt");
-            if (resourceUrl != null) {
-                Path resourcePath = Paths.get(resourceUrl.toURI());
-                Reader reader = new Reader(resourcePath.toString());
-                List<String> lists = reader.readTextFile();
-                String information = "";
-                for(String list:lists){
-                    information = information + list + "\n";
-                }
-                helpText.setText(information);
-            } else  System.out.println("Help file not founded.");
-        }catch (URISyntaxException e) { e.printStackTrace();}
+            String text = new String(resourceSupplier.getByteArrayFromTextFile("Help.txt"),StandardCharsets.UTF_8);
+            helpText.setText(text);
+        } catch (Exception e) {
+            NotificationManager.showError(InfoType.ERROR_SETTING);
+        }
     }
 
     public void printInfo(String info){

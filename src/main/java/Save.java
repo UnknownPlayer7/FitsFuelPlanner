@@ -7,9 +7,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class Save {
-    private static final Path pathDir = Paths.get(JarPath.getJarPath()+"/Goods");
-    private static final File FILE_PRODUCTS = new File(JarPath.getJarPath()+"/Goods/Product.txt");
-    private static final File FILE_CLIENTS = new File(JarPath.getJarPath()+"/Goods/Client.txt");
+    private static final Path pathDir = Paths.get(JarPath.getPathNearbyJar()+"/Goods");
+    private static final File FILE_PRODUCTS = new File(JarPath.getPathNearbyJar()+"/Goods/Product.txt");
+    private static final File FILE_CLIENTS = new File(JarPath.getPathNearbyJar()+"/Goods/Client.txt");
 
     public static boolean save(Goods object){
         if(!createDirectory()) {

@@ -1,5 +1,4 @@
 import java.io.*;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +9,7 @@ public class Reader {
 
     public Reader(String path){
         this.path = path;
-        jarPath = String.valueOf(JarPath.getJarPath());
+        jarPath = String.valueOf(JarPath.getPathNearbyJar());
     }
 
     //Read a file which locate into the jar

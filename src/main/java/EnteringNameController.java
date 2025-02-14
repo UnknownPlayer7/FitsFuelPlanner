@@ -24,8 +24,10 @@ public class EnteringNameController {
             ControllersArchive.setEnteringNameController(this);
             TabPane tabPane = ControllersArchive.getWorkspaceController().getTabPane();
             if(Save.save(new Client(textField.getText(),tabPane))){
-                ModalWindow.getSaveSuccess();
-            }
+                NotificationManager.showSuccessfulInfo(InfoType.SUCCESSFUL_SAVE);
+            } else
+                NotificationManager.showError(InfoType.ERROR_SAVE);
+
             Stage stage = (Stage)anchorPane.getScene().getWindow();
             stage.close();
         }

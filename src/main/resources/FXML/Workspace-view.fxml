@@ -51,8 +51,8 @@
         <menus>
           <Menu mnemonicParsing="false" text="Файл">
             <items>
-              <MenuItem mnemonicParsing="false" onAction="#save" text="Сохранить" />
-                  <MenuItem mnemonicParsing="false" onAction="#savePDF" text="Сохранить в PDF" />
+              <MenuItem mnemonicParsing="false" onAction="#saveClient" text="Сохранить клиента" />
+                  <MenuItem mnemonicParsing="false" onAction="#savePDF" text="Сохранить план в PDF" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Действия">
@@ -62,8 +62,18 @@
           </Menu>
             <Menu mnemonicParsing="false" text="Настройки">
               <items>
-                <MenuItem mnemonicParsing="false" onAction="#setWallpaperPDF" text="Изменить фон PDF файла" />
-                  <MenuItem mnemonicParsing="false" onAction="#setWallpaperMainMenu" text="Изменить фон главного меню" />
+                  <Menu mnemonicParsing="false" text="Главное меню">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#setWallpaperMainMenu" text="Изменить фон" />
+                    </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="PDF файл">
+                    <items>
+                      <MenuItem mnemonicParsing="false" onAction="#setWallpaperPDF" text="Изменить фон" />
+                        <MenuItem mnemonicParsing="false" onAction="#setTextColorPDF" text="Изменить цвет шрифта" />
+                        <MenuItem mnemonicParsing="false" onAction="#setBorderColorPDF" text="Изменить цвет рамки" />
+                    </items>
+                  </Menu>
               </items>
             </Menu>
         </menus>

@@ -1,0 +1,12 @@
+public enum InfoType {
+
+    SUCCESSFUL_CREATE,
+    ERROR_CREATE,
+    SUCCESSFUL_SAVE,
+    ERROR_SAVE,
+    SUCCESSFUL_SETTING,
+    ERROR_SETTING,
+    ERROR_LOAD
+
+
+}

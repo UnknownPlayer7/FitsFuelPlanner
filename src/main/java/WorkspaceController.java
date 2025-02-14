@@ -1,3 +1,4 @@
+
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -6,21 +7,18 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuBar;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class WorkspaceController extends NewTabController implements Initializable {
@@ -98,7 +96,7 @@ public class WorkspaceController extends NewTabController implements Initializab
             newTab.setContent(root);
         }
         catch(IOException exc){
-            System.out.println("Неудалось загрузить новую вкладку -_- " + exc);
+            NotificationManager.showError(InfoType.ERROR_LOAD);
         }
     }
 
@@ -123,8 +121,17 @@ public class WorkspaceController extends NewTabController implements Initializab
     }
 
     @FXML
-    void save(ActionEvent event) {
-            ModalWindow.getNameWriter();
+    void saveClient(ActionEvent event) {
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setHeaderText("Введите имя клиента:");
+        dialog.setTitle("Создание клиента");
+        Optional<String> optional = dialog.showAndWait();
+        optional.ifPresent(clientName -> {
+            if(Save.save(new Client(clientName,tabPane))){
+                NotificationManager.showSuccessfulInfo(InfoType.SUCCESSFUL_SAVE);
+            } else
+                NotificationManager.showError(InfoType.ERROR_SAVE);
+        });
     }
 
     @FXML
@@ -140,7 +147,11 @@ public class WorkspaceController extends NewTabController implements Initializab
         commonNutritionList.add(getFatLabelMain().getText());
         commonNutritionList.add(getAmountOfEnergyLabelMain().getText());
         WriterPdf writerPdf =new WriterPdf(client.getName(),client,tabNameList,commonNutritionList);
-        writerPdf.createPdf();
+
+        if(writerPdf.createPdf()) {
+            NotificationManager.showSuccessfulInfo(InfoType.SUCCESSFUL_SAVE);
+        } else
+            NotificationManager.showError(InfoType.ERROR_SAVE);
 
     }
 
@@ -166,32 +177,50 @@ public class WorkspaceController extends NewTabController implements Initializab
 
     @FXML
     void setWallpaperPDF(ActionEvent event) {
-        try{
-            Path oldPicturePath = Paths.get(this.getClass().getResource("/images/WallpaperPDF.jpg").toURI());
-            FileChooser fileChooser = new FileChooser();
-            File file = fileChooser.showOpenDialog(menuBar.getScene().getWindow());
-            if(file != null && file.exists())
-                Files.copy(file.toPath(), oldPicturePath, StandardCopyOption.REPLACE_EXISTING);
+        FileChooser chooser = new FileChooser();
+        File chosenFile = chooser.showOpenDialog(menuBar.getScene().getWindow());
+        if(chosenFile == null) return;
+        ResourceSupplier resourceSupplier = new ResourceSupplier();
+        boolean isCompleted = resourceSupplier.setImage("WallpaperPDF.jpg", chosenFile);
+        if(isCompleted)
+            NotificationManager.showSuccessfulInfo(InfoType.SUCCESSFUL_SETTING);
+        else
+            NotificationManager.showError(InfoType.ERROR_SETTING);
 
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+    }
+
+    @FXML
+    void setTextColorPDF(ActionEvent event) {
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Изменение цвета текста");
+        dialog.setContentText("Введите HEX-код цвета:");
+        dialog.setHeaderText("Не знаете, что такое HEX-код?\nА может не уверены, где его искать?\nОбратитесь в меню справки.");
+        Optional<String> optional = dialog.showAndWait();
+        optional.ifPresent(hexCodeColor -> WriterPdf.setColorInFrame(hexCodeColor));
+    }
+
+    @FXML
+    void setBorderColorPDF(ActionEvent event) {
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Изменение цвета рамки");
+        dialog.setContentText("Введите HEX-код цвета:");
+        dialog.setHeaderText("Не знаете, что такое HEX-код?\nА может не уверены, где его искать?\nОбратитесь в меню справки.");
+        Optional<String> optional = dialog.showAndWait();
+        optional.ifPresent(hexCodeColor -> WriterPdf.setBorderColor(hexCodeColor));
     }
 
     @FXML
     void setWallpaperMainMenu(ActionEvent event) {
-        try{
-            Path oldPicture = Paths.get(this.getClass().getResource("images/WallpaperMainMenu.jpg").toURI());
-            FileChooser fileChooser = new FileChooser();
-            File file = fileChooser.showOpenDialog(menuBar.getScene().getWindow());
-            if(file != null && file.exists()) {
-                Files.copy(file.toPath(),oldPicture,StandardCopyOption.REPLACE_EXISTING);
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+        FileChooser chooser = new FileChooser();
+        File chosenFile = chooser.showOpenDialog(menuBar.getScene().getWindow());
+        if(chosenFile == null) return;
+        ResourceSupplier resourceSupplier = new ResourceSupplier();
+        boolean isCompleted = resourceSupplier.setImage("WallpaperMainMenu.jpg", chosenFile);
+        if(isCompleted)
+            NotificationManager.showSuccessfulInfo(InfoType.SUCCESSFUL_SETTING);
+        else
+            NotificationManager.showError(InfoType.ERROR_SETTING);
     }
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
