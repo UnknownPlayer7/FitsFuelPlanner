@@ -23,7 +23,7 @@ public class EnteringNameController {
             this.name = textField.getText();
             ControllersArchive.setEnteringNameController(this);
             TabPane tabPane = ControllersArchive.getWorkspaceController().getTabPane();
-            if(Save.save(new Client(textField.getText(),tabPane))){
+            if(Save.saveClient(new Client(textField.getText(),tabPane))){
                 NotificationManager.showSuccessfulInfo(InfoType.SUCCESSFUL_SAVE);
             } else
                 NotificationManager.showError(InfoType.ERROR_SAVE);

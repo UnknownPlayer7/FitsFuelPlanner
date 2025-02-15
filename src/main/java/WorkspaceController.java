@@ -13,7 +13,6 @@ import javafx.scene.control.MenuBar;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -127,7 +126,7 @@ public class WorkspaceController extends NewTabController implements Initializab
         dialog.setTitle("Создание клиента");
         Optional<String> optional = dialog.showAndWait();
         optional.ifPresent(clientName -> {
-            if(Save.save(new Client(clientName,tabPane))){
+            if(Save.saveClient(new Client(clientName,tabPane))){
                 NotificationManager.showSuccessfulInfo(InfoType.SUCCESSFUL_SAVE);
             } else
                 NotificationManager.showError(InfoType.ERROR_SAVE);
@@ -196,7 +195,13 @@ public class WorkspaceController extends NewTabController implements Initializab
         dialog.setContentText("Введите HEX-код цвета:");
         dialog.setHeaderText("Не знаете, что такое HEX-код?\nА может не уверены, где его искать?\nОбратитесь в меню справки.");
         Optional<String> optional = dialog.showAndWait();
-        optional.ifPresent(hexCodeColor -> WriterPdf.setColorInFrame(hexCodeColor));
+        optional.ifPresent(hexCodeColor -> {
+            WriterPdf.setColorInFrame(hexCodeColor);
+            if(ResourceSupplier.setConfigFile("PDF.properties","/config/","textColorInFrame", hexCodeColor))
+                NotificationManager.showSuccessfulInfo(InfoType.SUCCESSFUL_SETTING);
+            else
+                NotificationManager.showError(InfoType.ERROR_SETTING);
+        });
     }
 
     @FXML
@@ -206,7 +211,13 @@ public class WorkspaceController extends NewTabController implements Initializab
         dialog.setContentText("Введите HEX-код цвета:");
         dialog.setHeaderText("Не знаете, что такое HEX-код?\nА может не уверены, где его искать?\nОбратитесь в меню справки.");
         Optional<String> optional = dialog.showAndWait();
-        optional.ifPresent(hexCodeColor -> WriterPdf.setBorderColor(hexCodeColor));
+        optional.ifPresent(hexCodeColor -> {
+            WriterPdf.setBorderColor(hexCodeColor);
+            if(ResourceSupplier.setConfigFile("PDF.properties","/config/","borderColor", hexCodeColor))
+                NotificationManager.showSuccessfulInfo(InfoType.SUCCESSFUL_SETTING);
+            else
+                NotificationManager.showError(InfoType.ERROR_SETTING);
+        });
     }
 
     @FXML

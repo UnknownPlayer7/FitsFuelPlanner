@@ -30,8 +30,7 @@ public class WriterPdf {
     private final Font rusFont_BLUE = FontFactory.getFont("rusFont_LIGHT", BaseFont.IDENTITY_H, true, 12,0,Color.BLUE);
 
     static{
-        ResourceSupplier resourceSupplier = new ResourceSupplier();
-        Properties properties = resourceSupplier.getProperties("PDF.config","/config/");
+        Properties properties = ResourceSupplier.getProperties("PDF.properties","/config/");
         textColorInFrame = Color.decode(properties.get("textColorInFrame").toString());
         borderColor = Color.decode(properties.get("borderColor").toString());
 

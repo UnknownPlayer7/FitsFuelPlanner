@@ -8,24 +8,20 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Properties;
 
 public class ResourceSupplier {
 
-    private static final String MAIN_ARCHIVE;
     private static final String RESOURCE_ARCHIVE = "resource.jar";
     private static final String IMAGES_DIR = "/images/";
     private static final String TEXTS_DIR = "/texts/";
 
-    static {
-        MAIN_ARCHIVE = String.valueOf(JarPath.getJarPath());
-    }
-
-    private URL getImageFromMainArchive(String name, String dir) {
-        if(name != null && dir != null) {
-            return this.getClass().getResource(dir+name);
+    private URL getImageFromMainArchive(String name) {
+        if(name != null) {
+            return this.getClass().getResource(IMAGES_DIR + name);
         }
         return null;
     }
@@ -76,7 +72,7 @@ public class ResourceSupplier {
             commitChangesIntoArchive();
             return image;
         } else {
-            URL url = getImageFromMainArchive(fileName, IMAGES_DIR);
+            URL url = getImageFromMainArchive(fileName);
             return new Image(String.valueOf(url));
         }
     }
@@ -105,7 +101,6 @@ public class ResourceSupplier {
         try {
             newImage.cp_p(oldImage);
         } catch (IOException e) {
-            System.out.println(e);
             System.out.println("Exception! Can't replace old Image.");
             return false;
         }
@@ -113,45 +108,14 @@ public class ResourceSupplier {
         return true;
     }
 
-//    public boolean setProperties(String propertyName, String newValue, String configFile, String dir) {
-//        try(TFileInputStream reader = new TFileInputStream(RESOURCE_ARCHIVE + dir + configFile)) {
-//            byte[] bytes = new byte[reader.available()];
-//            reader.read(bytes);
-//            System.out.println(Arrays.toString(bytes));
-//            return true;
-//        }catch (Exception e) {
-//            System.out.println(e);
-//            return false;
-//        }
-//
-//    }
-
-    public InputStream getInputStream(String fileName, String dir) {
-        if(fileExistsInArchive(fileName, dir)) {
-            try {
-                return new TFileInputStream(RESOURCE_ARCHIVE + dir + fileName);
-            } catch (FileNotFoundException e) {
-                System.out.println("Exception! File not found");
-            }
-        }else {
-            try(InputStream in = this.getClass().getResourceAsStream(dir + fileName);
-                TFileOutputStream out = new TFileOutputStream(RESOURCE_ARCHIVE + dir + fileName)) {
-                byte[] bytes = new byte[in.available()];
-                in.read(bytes);
-                out.write(bytes);
-            }
-            catch (Exception e) {
-                return null;
-            }
-        }
-        return getInputStream(fileName, dir);
-    }
-
-
-    public Properties getProperties(String configFile, String dir) {
+    public static Properties getProperties(String configFile, String dir) {
         Properties properties = new Properties();
+        Path filePath = Paths.get(JarPath.getPathNearbyJar() + dir + configFile);
+        if(isNotFileExistsNearbyJar(filePath)) {
+            moveConfigFileNearbyJar(configFile,dir);
+        }
         try {
-            properties.load(getInputStream(configFile,dir));
+            properties.load(Files.newInputStream(filePath));
         } catch (IOException e) {
             NotificationManager.showError(InfoType.ERROR_LOAD);
         }
@@ -163,6 +127,54 @@ public class ResourceSupplier {
             TVFS.umount();
         } catch (Exception e) {
             System.out.println("Exception! FsSyncWarningException.");
+        }
+    }
+
+    public static void moveConfigFileNearbyJar(String fileName, String dir) {
+        Path filePath = Paths.get(JarPath.getPathNearbyJar() + dir + fileName);
+        if(isNotFileExistsNearbyJar(filePath)) {
+            createDirectory(filePath.getParent());
+            try(InputStream in = ResourceSupplier.class.getResourceAsStream(dir + fileName);
+                BufferedWriter writer= new BufferedWriter(new FileWriter(JarPath.getPathNearbyJar() + dir + fileName))) {
+                byte[] bytes = new byte[in.available()];
+                in.read(bytes);
+                writer.write(new String(bytes));
+            } catch (Exception e) {
+                System.out.println("Exception! Can't create system file.");
+            }
+        }
+    }
+
+    public static boolean setConfigFile(String fileName, String dir, String key, String value) {
+        moveConfigFileNearbyJar(fileName,dir);
+        Properties properties = new Properties();
+        try(InputStream in = Files.newInputStream(Paths.get(JarPath.getPathNearbyJar() + dir + fileName))) {
+            properties.load(in);
+            properties.setProperty(key,value);
+        } catch (Exception e) {
+            System.out.println("Exception! Can't read config file." + e);
+        }
+        try(OutputStream out = Files.newOutputStream(Paths.get(JarPath.getPathNearbyJar() + dir + fileName))) {
+            properties.store(out,"Update properties");
+            return true;
+        } catch (Exception e) {
+            System.out.println("Exception! Can't update config file." + e);
+        }
+        return false;
+    }
+
+    private static boolean isNotFileExistsNearbyJar(Path filePath) {
+        return !Files.exists(filePath);
+    }
+
+    private static void createDirectory(Path pathDir){
+        try{
+            if(!Files.exists(pathDir)) {
+                Files.createDirectory(pathDir);
+            }
+        }
+        catch(IOException exc){
+            System.out.println("Something went wrong: "+exc );
         }
     }
 

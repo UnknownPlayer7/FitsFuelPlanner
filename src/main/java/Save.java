@@ -1,18 +1,15 @@
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class Save {
-    private static final Path pathDir = Paths.get(JarPath.getPathNearbyJar()+"/Goods");
+    private static final Path PATH_GOODS_DIR = Paths.get(JarPath.getPathNearbyJar()+"/Goods");
     private static final File FILE_PRODUCTS = new File(JarPath.getPathNearbyJar()+"/Goods/Product.txt");
     private static final File FILE_CLIENTS = new File(JarPath.getPathNearbyJar()+"/Goods/Client.txt");
 
-    public static boolean save(Goods object){
-        if(!createDirectory()) {
+    public static boolean saveProduct(Goods object){
+        if(createDirectory(PATH_GOODS_DIR)) {
             System.out.println("Неудалось создать директорию и файл для хранения картотеки!");
         }
         boolean append = new File(String.valueOf(FILE_PRODUCTS)).exists();
@@ -31,8 +28,8 @@ public class Save {
         return true;
     }
 
-    public static boolean save(Client object){
-        if(!createDirectory()) {
+    public static boolean saveClient(Client object){
+        if(createDirectory(PATH_GOODS_DIR)) {
             System.out.println("Неудалось создать директорию и файл для хранения картотеки!");
         }
         boolean append = new File(String.valueOf(FILE_CLIENTS)).exists();
@@ -50,13 +47,16 @@ public class Save {
         return true;
     }
 
-    private static boolean createDirectory(){
+    private static boolean createDirectory(Path pathDir){
         try{
-            if(!Files.exists(pathDir)) Files.createDirectory(pathDir);
+            if(!Files.exists(pathDir)) {
+                Files.createDirectory(pathDir);
+                return false;
+            }
         }
         catch(IOException exc){
             System.out.println("Something went wrong: "+exc );
-            return false;
+            return true;
         }
         return true;
     }

@@ -68,20 +68,17 @@ public class AddProductController {
     @FXML
     void buttonOnFatAnimal(ActionEvent event) {
         fatPlant.setSelected(false);
-
-
     }
 
     @FXML
     void buttonOnFatPlant(ActionEvent event) {
         fatAnimal.setSelected(false);
-
     }
 
     @FXML
     void saveProduct(ActionEvent event) {
         Goods product = createProduct();
-        if(Save.save(product))
+        if(Save.saveProduct(product))
             NotificationManager.showSuccessfulInfo(InfoType.SUCCESSFUL_SAVE);
         else
             NotificationManager.showError(InfoType.ERROR_SAVE);
@@ -127,8 +124,7 @@ public class AddProductController {
         }else if(this.fatPlant.isSelected()){
             fatType = "Plant";
         }else fatType = "Unknown";
-        Goods product = new Goods(name,energyOfProduct,protein,proteinType,carb,carbType,fat,fatType,productsKey);
-        return product;
+        return new Goods(name,energyOfProduct,protein,proteinType,carb,carbType,fat,fatType,productsKey);
     }
 
 }
