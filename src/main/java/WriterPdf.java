@@ -11,40 +11,68 @@ import java.util.HashMap;
 import java.util.Properties;
 
 public class WriterPdf {
-    private static Color textColorInFrame;
     private static Color borderColor;
+    private static Color textColorInFrame;
+    private static Color textColorBeyondFrame;
+    private static Color cellColorAnimalElement;
+    private static Color cellColorPlantElement;
+    private static Color cellColorComplexCarb;
+    private static Color cellColorSimpleCarb;
 
     private final String name;
     private final Client client;
     private final float[] columnDefaultSize = {90,30,30,30,30,30};
     private final ArrayList<String> titles;
     private final ArrayList<String> commonNutrition;
-    private final Font font12_BOLD = FontFactory.getFont(FontFactory.TIMES_BOLD,12,textColorInFrame);
-    private final Font rusFont12_BOLD = FontFactory.getFont("rusFont_BOLD", BaseFont.IDENTITY_H, true, 12,0, textColorInFrame);
-    private final Font rusFont12_LIGHT = FontFactory.getFont("rusFont_LIGHT", BaseFont.IDENTITY_H, true, 12,0, textColorInFrame);
-    private final Font rusFont14_BOLD = FontFactory.getFont("rusFont_BOLD", BaseFont.IDENTITY_H, true, 14,0, textColorInFrame);
-    private final Font rusFont16_BOLD = FontFactory.getFont("rusFont_BOLD", BaseFont.IDENTITY_H, true, 16,0, textColorInFrame);
-    private final Font rusFont_RED = FontFactory.getFont("rusFont_LIGHT", BaseFont.IDENTITY_H, true, 12,0,Color.RED);
-    private final Font rusFont_GREEN = FontFactory.getFont("rusFont_LIGHT", BaseFont.IDENTITY_H, true, 12,0,Color.GREEN);
-    private final Font rusFont_YELLOW = FontFactory.getFont("rusFont_LIGHT", BaseFont.IDENTITY_H, true, 12,0,Color.YELLOW);
-    private final Font rusFont_BLUE = FontFactory.getFont("rusFont_LIGHT", BaseFont.IDENTITY_H, true, 12,0,Color.BLUE);
+
+    private Font rusFont12_BOLD;
+    private Font rusFont12_LIGHT;
+    private Font rusFont14_BOLD;
+    private Font rusFont16_BOLD;
+    private Font rusFont_RED;
+    private Font rusFont_GREEN;
+    private Font rusFont_YELLOW;
+    private Font rusFont_BLUE;
 
     static{
-        Properties properties = ResourceSupplier.getProperties("PDF.properties","/config/");
-        textColorInFrame = Color.decode(properties.get("textColorInFrame").toString());
-        borderColor = Color.decode(properties.get("borderColor").toString());
-
-        //Добавляем русский шрифт в регистр класса FontFactory
-        FontFactory.register( String.valueOf(WriterPdf.class.getResource("fonts/Noto_Sans_Rus/static/NotoSans-Light.ttf")), "rusFont_LIGHT");
-        FontFactory.register( String.valueOf(WriterPdf.class.getResource("fonts/Noto_Sans_Rus/static/NotoSans-Bold.ttf")), "rusFont_BOLD");
-
+        initializeColors();
+        registerFonts();
     }
 
     WriterPdf(String name,Client client,ArrayList<String> titles,ArrayList<String> commonNutrition){
+        initializeFonts();
         this.name = name;
         this.client = client;
         this.titles = titles;
         this.commonNutrition = commonNutrition;
+    }
+
+    private static void initializeColors() {
+        Properties properties = ResourceSupplier.getProperties("PDF.properties","/config/");
+        borderColor = Color.decode(properties.get("borderColor").toString());
+        textColorInFrame = Color.decode(properties.get("textColorInFrame").toString());
+        textColorBeyondFrame = Color.decode(properties.get("textColorBeyondFrame").toString());
+        cellColorAnimalElement = Color.decode(properties.get("cellColorAnimalElement").toString());
+        cellColorPlantElement = Color.decode(properties.get("cellColorPlantElement").toString());
+        cellColorComplexCarb = Color.decode(properties.get("cellColorComplexCarb").toString());
+        cellColorSimpleCarb = Color.decode(properties.get("cellColorSimpleCarb").toString());
+    }
+
+    private void initializeFonts() {
+        rusFont12_BOLD = FontFactory.getFont("rusFont_BOLD", BaseFont.IDENTITY_H, true, 12,0, textColorInFrame);
+        rusFont12_LIGHT = FontFactory.getFont("rusFont_LIGHT", BaseFont.IDENTITY_H, true, 12,0, textColorBeyondFrame);
+        rusFont14_BOLD = FontFactory.getFont("rusFont_BOLD", BaseFont.IDENTITY_H, true, 14,0, textColorInFrame);
+        rusFont16_BOLD = FontFactory.getFont("rusFont_BOLD", BaseFont.IDENTITY_H, true, 16,0, textColorInFrame);
+        rusFont_RED = FontFactory.getFont("rusFont_LIGHT", BaseFont.IDENTITY_H, true, 12,0, cellColorAnimalElement);
+        rusFont_GREEN = FontFactory.getFont("rusFont_LIGHT", BaseFont.IDENTITY_H, true, 12,0, cellColorPlantElement);
+        rusFont_YELLOW = FontFactory.getFont("rusFont_LIGHT", BaseFont.IDENTITY_H, true, 12,0, cellColorSimpleCarb);
+        rusFont_BLUE = FontFactory.getFont("rusFont_LIGHT", BaseFont.IDENTITY_H, true, 12,0, cellColorComplexCarb);
+    }
+
+    private static void registerFonts() {
+        FontFactory.register( String.valueOf(WriterPdf.class.getResource("fonts/Noto_Sans_Rus/static/NotoSans-Light.ttf")), "rusFont_LIGHT");
+        FontFactory.register( String.valueOf(WriterPdf.class.getResource("fonts/Noto_Sans_Rus/static/NotoSans-Bold.ttf")), "rusFont_BOLD");
+
     }
 
     public boolean createPdf(){
@@ -75,23 +103,23 @@ public class WriterPdf {
                     cell = new PdfPCell(new Phrase(product.getName(), rusFont12_BOLD));
                     table.addCell(cell);
                     if(product.getTypeOfCarb().equals("Simple")){
-                        cell.setBackgroundColor(Color.YELLOW.darker());
-                    }else cell.setBackgroundColor(Color.BLUE.darker());
-                    cell.setPhrase(new Phrase(String.valueOf(product.getCarb()), font12_BOLD));
+                        cell.setBackgroundColor(cellColorSimpleCarb);
+                    }else cell.setBackgroundColor(cellColorComplexCarb);
+                    cell.setPhrase(new Phrase(String.valueOf(product.getCarb()), rusFont12_BOLD));
                     table.addCell(cell);
                     if(product.getTypeOfProtein().equals("Animal")){
-                        cell.setBackgroundColor(Color.RED.darker());
-                    }else cell.setBackgroundColor(Color.GREEN.darker());
-                    cell.setPhrase(new Phrase(String.valueOf(product.getProtein()), font12_BOLD));
+                        cell.setBackgroundColor(cellColorAnimalElement);
+                    }else cell.setBackgroundColor(cellColorPlantElement);
+                    cell.setPhrase(new Phrase(String.valueOf(product.getProtein()), rusFont12_BOLD));
                     table.addCell(cell);
                     if(product.getTypeOfFat().equals("Animal")){
-                        cell.setBackgroundColor(Color.RED.darker());
-                    }else cell.setBackgroundColor(Color.GREEN.darker());
-                    cell.setPhrase(new Phrase(String.valueOf(product.getFat()), font12_BOLD));
+                        cell.setBackgroundColor(cellColorAnimalElement);
+                    }else cell.setBackgroundColor(cellColorPlantElement);
+                    cell.setPhrase(new Phrase(String.valueOf(product.getFat()), rusFont12_BOLD));
                     table.addCell(cell);
-                    cell = new PdfPCell(new Phrase(String.valueOf(product.getAmountOfEnergy()), font12_BOLD));
+                    cell = new PdfPCell(new Phrase(String.valueOf(product.getAmountOfEnergy()), rusFont12_BOLD));
                     table.addCell(cell);
-                    cell = new PdfPCell(new Phrase(String.valueOf(product.getAmountOfProduct()), font12_BOLD));
+                    cell = new PdfPCell(new Phrase(String.valueOf(product.getAmountOfProduct()), rusFont12_BOLD));
 
                     table.addCell(cell);
                 }
@@ -101,7 +129,7 @@ public class WriterPdf {
                 cell.setHorizontalAlignment(1);
                 table.addCell(cell);
                 for(String string: nutritionMap.get(i)){
-                    cell = new PdfPCell(new Phrase(string, font12_BOLD));
+                    cell = new PdfPCell(new Phrase(string, rusFont12_BOLD));
                     table.addCell(cell);
                 }
                 cell = new PdfPCell(new Phrase("-", rusFont12_BOLD));
@@ -186,10 +214,17 @@ public class WriterPdf {
     }
 
     private void writeIntroduction(Document document){
-        document.add(buildPhrase("1) ","Красный цвет"," - элементы животного происхождения;",rusFont_RED));
-        document.add(buildPhrase("2) ","Зеленый цвет"," - элементы растительного происхождения;",rusFont_GREEN));
-        document.add(buildPhrase("3) ","Синий цвет"," - элементы относящийся к полисахаридам, инимы словами сложные углеводы;",rusFont_BLUE));
-        document.add(buildPhrase("4) ","Желтый цвет"," - элементы относящийся к моносахаридам, т.е. простые углеводы;", rusFont_YELLOW));
+        document.add(buildPhrase("1) ","Элементы "," животного происхождения;",rusFont_RED));
+        document.add(buildPhrase("2) ","Элементы "," растительного происхождения;",rusFont_GREEN));
+        document.add(buildPhrase("3) ","Элементы"," относящийся к полисахаридам, инимы словами сложные углеводы;",rusFont_BLUE));
+        document.add(buildPhrase("4) ","Элементы"," относящийся к моносахаридам, т.е. простые углеводы;", rusFont_YELLOW));
+    }
+
+    private Paragraph buildPhrase(String first,String second,String third, Font painter){
+        Paragraph paragraph = new Paragraph(new Chunk(first, rusFont12_LIGHT));
+        paragraph.add(new Chunk(second,painter));
+        paragraph.add(new Chunk(third, rusFont12_LIGHT));
+        return paragraph;
     }
 
     private void writeCommonNutrition(Document document){
@@ -207,20 +242,13 @@ public class WriterPdf {
 
         }
         for(String string: commonNutrition){
-            cell = new PdfPCell(new Phrase(Finder.findNumber(string), font12_BOLD));
+            cell = new PdfPCell(new Phrase(Finder.findNumber(string), rusFont12_BOLD));
             cell.setFixedHeight(20f);
             table.addCell(cell);
         }
         setBorderWidthAndColor(table);
         document.add(table);
 
-    }
-
-    private Paragraph buildPhrase(String first,String second,String third, Font painter){
-        Paragraph paragraph = new Paragraph(new Chunk(first, rusFont12_LIGHT));
-        paragraph.add(new Chunk(second,painter));
-        paragraph.add(new Chunk(third, rusFont12_LIGHT));
-        return paragraph;
     }
 
     private HashMap<Integer, ArrayList<String>> getNutrition(Client client){
@@ -264,15 +292,6 @@ public class WriterPdf {
         }
     }
 
-    public static void setColorInFrame(String hexCodeColor) {
-        try {
-            WriterPdf.textColorInFrame = Color.decode(hexCodeColor);
-            NotificationManager.showSuccessfulInfo(InfoType.SUCCESSFUL_SETTING);
-        } catch (NumberFormatException e) {
-            NotificationManager.showError(InfoType.ERROR_SETTING);
-        }
-    }
-
     public static void setBorderColor(String hexCodeColor) {
         try {
             WriterPdf.borderColor = Color.decode(hexCodeColor);
@@ -281,4 +300,60 @@ public class WriterPdf {
             NotificationManager.showError(InfoType.ERROR_SETTING);
         }
     }
+
+    public static void setTextColorInFrame(String hexCodeColor) {
+        try {
+            WriterPdf.textColorInFrame = Color.decode(hexCodeColor);
+            NotificationManager.showSuccessfulInfo(InfoType.SUCCESSFUL_SETTING);
+        } catch (NumberFormatException e) {
+            NotificationManager.showError(InfoType.ERROR_SETTING);
+        }
+    }
+
+    public static void setTextColorBeyondFrame(String hexCodeColor) {
+        try {
+            WriterPdf.textColorBeyondFrame = Color.decode(hexCodeColor);
+            NotificationManager.showSuccessfulInfo(InfoType.SUCCESSFUL_SETTING);
+        } catch (NumberFormatException e) {
+            NotificationManager.showError(InfoType.ERROR_SETTING);
+        }
+    }
+
+    public static void setCellColorAnimalElement(String hexCodeColor) {
+        try {
+            WriterPdf.cellColorAnimalElement = Color.decode(hexCodeColor);
+            NotificationManager.showSuccessfulInfo(InfoType.SUCCESSFUL_SETTING);
+        } catch (NumberFormatException e) {
+            NotificationManager.showError(InfoType.ERROR_SETTING);
+        }
+    }
+
+    public static void setCellColorPlantElement(String hexCodeColor) {
+        try {
+            WriterPdf.cellColorPlantElement = Color.decode(hexCodeColor);
+            NotificationManager.showSuccessfulInfo(InfoType.SUCCESSFUL_SETTING);
+        } catch (NumberFormatException e) {
+            NotificationManager.showError(InfoType.ERROR_SETTING);
+        }
+    }
+
+    public static void setCellColorComplexCarb(String hexCodeColor) {
+        try {
+            WriterPdf.cellColorComplexCarb = Color.decode(hexCodeColor);
+            NotificationManager.showSuccessfulInfo(InfoType.SUCCESSFUL_SETTING);
+        } catch (NumberFormatException e) {
+            NotificationManager.showError(InfoType.ERROR_SETTING);
+        }
+    }
+
+    public static void setCellColorSimpleCarb(String hexCodeColor) {
+        try {
+            WriterPdf.cellColorSimpleCarb = Color.decode(hexCodeColor);
+            NotificationManager.showSuccessfulInfo(InfoType.SUCCESSFUL_SETTING);
+        } catch (NumberFormatException e) {
+            NotificationManager.showError(InfoType.ERROR_SETTING);
+        }
+    }
+
+
 }

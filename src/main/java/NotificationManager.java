@@ -1,4 +1,8 @@
+
 import javafx.scene.control.Alert;
+import javafx.scene.control.TextInputDialog;
+
+import java.util.Optional;
 
 public class NotificationManager {
 
@@ -47,6 +51,46 @@ public class NotificationManager {
         }
         alert.setHeaderText(message);
         alert.show();
+    }
+
+    public static void showDialogAndSetElementColor(ElementType elementType) {
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle(elementType.getDecryption());
+        dialog.setContentText("Введите HEX-код цвета:");
+        dialog.setHeaderText("Не знаете, что такое HEX-код?\nА может не уверены, где его искать?\nОбратитесь в меню справки.");
+        Optional<String> optional = dialog.showAndWait();
+        optional.ifPresent(hexCodeColor -> {
+            chooseAndInvokeSettingMethod(elementType, hexCodeColor);
+            if(ResourceSupplier.setConfigFile("PDF.properties","/config/",elementType.getKey(), hexCodeColor))
+                NotificationManager.showSuccessfulInfo(InfoType.SUCCESSFUL_SETTING);
+            else
+                NotificationManager.showError(InfoType.ERROR_SETTING);
+        });
+    }
+
+    private static void chooseAndInvokeSettingMethod(ElementType elementType, String hexCodeColor) {
+        switch (elementType){
+            case BORDER:
+                WriterPdf.setBorderColor(hexCodeColor);
+                break;
+            case TEXT_IN_FRAME:
+                WriterPdf.setTextColorInFrame(hexCodeColor);
+                break;
+            case TEXT_BEYOND_FRAME:
+                WriterPdf.setTextColorBeyondFrame(hexCodeColor);
+                break;
+            case CELL_ANIMAL_ELEMENT:
+                WriterPdf.setCellColorAnimalElement(hexCodeColor);
+                break;
+            case CELL_PLANT_ELEMENT:
+                WriterPdf.setCellColorPlantElement(hexCodeColor);
+                break;
+            case CELL_COMPLEX_CARB:
+                WriterPdf.setCellColorComplexCarb(hexCodeColor);
+                break;
+            case CELL_SIMPLE_CARB:
+                WriterPdf.setCellColorSimpleCarb(hexCodeColor);
+        }
     }
 
 }

@@ -57,11 +57,6 @@
                   <MenuItem mnemonicParsing="false" text="Добавить в пакет" visible="false" />
                </items>
             </Menu>
-            <Menu mnemonicParsing="false" text="Помощь">
-               <items>
-                  <MenuItem mnemonicParsing="false" onAction="#getHelp" text="Справка" />
-               </items>
-            </Menu>
          </menus>
       </MenuBar>
       <RadioButton fx:id="carbComplex" layoutX="99.0" layoutY="161.0" mnemonicParsing="false" onAction="#buttonOnCarbComplex" text="Сложные">

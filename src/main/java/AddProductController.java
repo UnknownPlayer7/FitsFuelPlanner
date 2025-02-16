@@ -90,15 +90,6 @@ public class AddProductController {
         ControllersArchive.getCurrentTab().addProduct(product);
     }
 
-    @FXML
-    void getHelp(ActionEvent event) {
-
-        ModalWindow helpWindow = new ModalWindow();
-        helpWindow.newWindow(650,305,"Справка","/FXML/Help-view.fxml",
-                "/images/iconHelp.png");
-
-    }
-
     private Goods createProduct(){
         String name = this.name.getText();
         String productsKey = this.productsKey.getText();

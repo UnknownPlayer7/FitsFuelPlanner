@@ -70,10 +70,36 @@
                   <Menu mnemonicParsing="false" text="PDF файл">
                     <items>
                       <MenuItem mnemonicParsing="false" onAction="#setWallpaperPDF" text="Изменить фон" />
-                        <MenuItem mnemonicParsing="false" onAction="#setTextColorPDF" text="Изменить цвет шрифта" />
                         <MenuItem mnemonicParsing="false" onAction="#setBorderColorPDF" text="Изменить цвет рамки" />
+                        <Menu mnemonicParsing="false" text="Ячейки">
+                          <items>
+                              <Menu mnemonicParsing="false" text="Белки/Жиры">
+                                <items>
+                                  <MenuItem mnemonicParsing="false" onAction="#setCellColorAnimalElement" text="Животные" />
+                                    <MenuItem mnemonicParsing="false" onAction="#setCellColorPlantElement" text="Растительные" />
+                                </items>
+                              </Menu>
+                              <Menu mnemonicParsing="false" text="Углеводы">
+                                <items>
+                                  <MenuItem mnemonicParsing="false" onAction="#setCellColorComplexCarb" text="Сложные" />
+                                    <MenuItem mnemonicParsing="false" onAction="#setCellColorSimpleCarb" text="Простые" />
+                                </items>
+                              </Menu>
+                          </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Текст">
+                          <items>
+                            <MenuItem mnemonicParsing="false" onAction="#setTextColorInFrame" text="Цвет текста в рамке" />
+                              <MenuItem mnemonicParsing="false" onAction="#setTextColorBeyondFrame" text="Цвет текста снаружи" />
+                          </items>
+                        </Menu>
                     </items>
                   </Menu>
+              </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Помощь">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#showHelpInfo" text="Справка" />
               </items>
             </Menu>
         </menus>

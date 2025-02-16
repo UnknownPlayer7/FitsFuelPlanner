@@ -189,35 +189,8 @@ public class WorkspaceController extends NewTabController implements Initializab
     }
 
     @FXML
-    void setTextColorPDF(ActionEvent event) {
-        TextInputDialog dialog = new TextInputDialog();
-        dialog.setTitle("Изменение цвета текста");
-        dialog.setContentText("Введите HEX-код цвета:");
-        dialog.setHeaderText("Не знаете, что такое HEX-код?\nА может не уверены, где его искать?\nОбратитесь в меню справки.");
-        Optional<String> optional = dialog.showAndWait();
-        optional.ifPresent(hexCodeColor -> {
-            WriterPdf.setColorInFrame(hexCodeColor);
-            if(ResourceSupplier.setConfigFile("PDF.properties","/config/","textColorInFrame", hexCodeColor))
-                NotificationManager.showSuccessfulInfo(InfoType.SUCCESSFUL_SETTING);
-            else
-                NotificationManager.showError(InfoType.ERROR_SETTING);
-        });
-    }
-
-    @FXML
     void setBorderColorPDF(ActionEvent event) {
-        TextInputDialog dialog = new TextInputDialog();
-        dialog.setTitle("Изменение цвета рамки");
-        dialog.setContentText("Введите HEX-код цвета:");
-        dialog.setHeaderText("Не знаете, что такое HEX-код?\nА может не уверены, где его искать?\nОбратитесь в меню справки.");
-        Optional<String> optional = dialog.showAndWait();
-        optional.ifPresent(hexCodeColor -> {
-            WriterPdf.setBorderColor(hexCodeColor);
-            if(ResourceSupplier.setConfigFile("PDF.properties","/config/","borderColor", hexCodeColor))
-                NotificationManager.showSuccessfulInfo(InfoType.SUCCESSFUL_SETTING);
-            else
-                NotificationManager.showError(InfoType.ERROR_SETTING);
-        });
+        NotificationManager.showDialogAndSetElementColor(ElementType.BORDER);
     }
 
     @FXML
@@ -231,6 +204,45 @@ public class WorkspaceController extends NewTabController implements Initializab
             NotificationManager.showSuccessfulInfo(InfoType.SUCCESSFUL_SETTING);
         else
             NotificationManager.showError(InfoType.ERROR_SETTING);
+    }
+
+    @FXML
+    void setCellColorAnimalElement(ActionEvent event) {
+        NotificationManager.showDialogAndSetElementColor(ElementType.CELL_ANIMAL_ELEMENT);
+    }
+
+    @FXML
+    void setCellColorPlantElement(ActionEvent event) {
+        NotificationManager.showDialogAndSetElementColor(ElementType.CELL_PLANT_ELEMENT);
+    }
+
+    @FXML
+    void setCellColorComplexCarb(ActionEvent event) {
+        NotificationManager.showDialogAndSetElementColor(ElementType.CELL_COMPLEX_CARB);
+    }
+
+    @FXML
+    void setCellColorSimpleCarb(ActionEvent event) {
+        NotificationManager.showDialogAndSetElementColor(ElementType.CELL_SIMPLE_CARB);
+    }
+
+    @FXML
+    void setTextColorInFrame(ActionEvent event) {
+        NotificationManager.showDialogAndSetElementColor(ElementType.TEXT_IN_FRAME);
+    }
+
+    @FXML
+    void setTextColorBeyondFrame(ActionEvent event) {
+        NotificationManager.showDialogAndSetElementColor(ElementType.TEXT_BEYOND_FRAME);
+    }
+
+    @FXML
+    void showHelpInfo(ActionEvent event) {
+
+        ModalWindow helpWindow = new ModalWindow();
+        helpWindow.newWindow(650,305,"Справка","/FXML/Help-view.fxml",
+                "/images/iconHelp.png");
+
     }
 
     @Override
