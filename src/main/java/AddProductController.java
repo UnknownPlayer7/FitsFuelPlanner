@@ -78,6 +78,7 @@ public class AddProductController {
     @FXML
     void saveProduct(ActionEvent event) {
         Goods product = createProduct();
+        if (product == null) return;
         if(Save.saveProduct(product))
             NotificationManager.showSuccessfulInfo(InfoType.SUCCESSFUL_SAVE);
         else
@@ -87,35 +88,46 @@ public class AddProductController {
     @FXML
     void addProduct(ActionEvent event){
         Goods product = createProduct();
-        ControllersArchive.getCurrentTab().addProduct(product);
+        if(product != null)
+            ControllersArchive.getCurrentTab().addProduct(product);
     }
 
     private Goods createProduct(){
-        String name = this.name.getText();
-        String productsKey = this.productsKey.getText();
-        double energyOfProduct = Double.parseDouble(this.energyOfProduct.getText());
-        double carb = Double.parseDouble(this.carb.getText());
-        double protein = Double.parseDouble(this.protein.getText());
-        String carbType;
-        if(this.carbComplex.isSelected()){
-            carbType = "Complex";
-        }else if(this.carbSimple.isSelected()){
-                carbType = "Simple";
-        }else carbType = "Unknown";
-        String proteinType;
-        if(this.proteinAnimal.isSelected()){
-            proteinType = "Animal";
-        }else if(this.proteinPlant.isSelected()){
-            proteinType = "Plant";
-        }else proteinType = "Unknown";
-        double fat = Double.parseDouble(this.fat.getText());
-        String fatType;
-        if(this.fatAnimal.isSelected()){
-            fatType = "Animal";
-        }else if(this.fatPlant.isSelected()){
-            fatType = "Plant";
-        }else fatType = "Unknown";
-        return new Goods(name,energyOfProduct,protein,proteinType,carb,carbType,fat,fatType,productsKey);
+        try{
+            String name = this.name.getText();
+            String productsKey = this.productsKey.getText();
+            double energyOfProduct = Double.parseDouble(this.energyOfProduct.getText());
+            double carb = Double.parseDouble(this.carb.getText());
+            double protein = Double.parseDouble(this.protein.getText());
+            double fat = Double.parseDouble(this.fat.getText());
+            String fatType = getButtonStatus(fatAnimal, fatPlant);
+            String carbType = getButtonStatus(carbComplex,carbSimple);
+            String proteinType = getButtonStatus(proteinAnimal, proteinPlant);
+            return new Goods(name,energyOfProduct,protein,proteinType,carb,carbType,fat,fatType,productsKey);
+        } catch (Exception e) {
+            NotificationManager.showError(InfoType.ERROR_CREATE);
+            return null;
+        }
+    }
+
+    private String getButtonStatus(RadioButton firstButton, RadioButton secondButton) {
+        if(firstButton.isSelected()){
+            return  convertTextFromButton(firstButton);
+        }else if(secondButton.isSelected()){
+            return  convertTextFromButton(secondButton);
+        }else {
+            throw new NullPointerException();
+        }
+    }
+
+    private String convertTextFromButton(RadioButton radioButton) {
+        switch (radioButton.getText()) {
+            case "Сложные": return "Complex";
+            case "Простые": return "Simple";
+            case "Животные": return "Animal";
+            case "Растительные": return "Plant";
+            default: return radioButton.getText();
+        }
     }
 
 }

@@ -8,53 +8,33 @@ import java.util.Optional;
 
 public class NotificationManager {
 
+
+
     public static void showError(InfoType errorType) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        setIconFrame(alert);
-        alert.setTitle("Зараза!");
-        alert.setContentText("— Я вижу, ты отлично находишь общий язык с троллем.\n— У меня большой опыт. Я всю жизнь работаю с идиотами.");
-        String message;
-        switch (errorType) {
-            case ERROR_SAVE:
-                message = "Ошибка сохранения!";
-                break;
-            case ERROR_CREATE:
-                message = "Ошибка при создании!";
-                break;
-            case ERROR_SETTING:
-                message = "Ошибка при установке!";
-                break;
-            case ERROR_LOAD:
-                message = "Ошибка при загрузке";
-                break;
-            default:
-                message = "Как всегда, неприятности находят меня первыми.";
-        }
-        alert.setHeaderText(message);
+        String[] titleAndContentText = {MyText.getErrorTitle(),MyText.getErrorPhrase()};
+        Alert alert = createAlert(Alert.AlertType.ERROR, errorType,titleAndContentText);
         alert.show();
     }
 
     public static void showSuccessfulInfo(InfoType infoType) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        setIconFrame(alert);
-        alert.setTitle("Успех");
-        alert.setContentText("Когда умирает мечта, то тьма заполняет опустевшее место.");
-        String message;
-        switch (infoType) {
-            case SUCCESSFUL_SAVE:
-                message = "Сохранение выполнено!";
-                break;
-            case SUCCESSFUL_CREATE:
-                message = "Создание выполнено!";
-                break;
-            case SUCCESSFUL_SETTING:
-                message = "Установка завершена!";
-                break;
-            default:
-                message = "Действие выполнено!";
-        }
-        alert.setHeaderText(message);
+        String[] titleAndContentText = {MyText.getSuccessTitle(),MyText.getSuccessPhrase()};
+        Alert alert = createAlert(Alert.AlertType.INFORMATION, infoType,titleAndContentText);
         alert.show();
+    }
+
+    private static Alert createAlert(Alert.AlertType alertType, InfoType infoType, String...titleAndContentText) {
+        Alert alert = new Alert(alertType);
+        setIconFrame(alert);
+        if(containExactlyTwoElements(titleAndContentText)) {
+            alert.setTitle(titleAndContentText[0]);
+            alert.setContentText(titleAndContentText[1]);
+        }
+        alert.setHeaderText(infoType.getDescription());
+        return alert;
+    }
+
+    private static boolean containExactlyTwoElements(String[] strings) {
+        return strings.length == 2;
     }
 
     public static void showDialogAndSetElementColor(ElementType elementType) {
@@ -92,7 +72,7 @@ public class NotificationManager {
         }
     }
 
-    private static void setIconFrame(Dialog dialog) {
+    private static void setIconFrame(Dialog<?> dialog) {
         Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
         stage.getIcons().add(Finder.findIcon("/images/Tree.png"));
     }

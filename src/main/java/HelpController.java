@@ -11,12 +11,11 @@ public class HelpController {
     private Label infoText;
 
     public void printHelpInfo() {
-        ResourceSupplier resourceSupplier = new ResourceSupplier();
         try{
-            String text = new String(resourceSupplier.getByteArrayFromTextFile("Help.txt"),StandardCharsets.UTF_8);
+            String text = new String(ResourceSupplier.getByteArrayFromTextFile("Help.txt"),StandardCharsets.UTF_8);
             helpText.setText(text);
         } catch (Exception e) {
-            NotificationManager.showError(InfoType.ERROR_SETTING);
+            NotificationManager.showError(InfoType.ERROR_LOAD);
         }
     }
 

@@ -148,9 +148,9 @@ public class WorkspaceController extends NewTabController implements Initializab
         WriterPdf writerPdf =new WriterPdf(client.getName(),client,tabNameList,commonNutritionList);
 
         if(writerPdf.createPdf()) {
-            NotificationManager.showSuccessfulInfo(InfoType.SUCCESSFUL_SAVE);
+            NotificationManager.showSuccessfulInfo(InfoType.SUCCESSFUL_CREATE);
         } else
-            NotificationManager.showError(InfoType.ERROR_SAVE);
+            NotificationManager.showError(InfoType.ERROR_CREATE);
 
     }
 
@@ -182,9 +182,9 @@ public class WorkspaceController extends NewTabController implements Initializab
         ResourceSupplier resourceSupplier = new ResourceSupplier();
         boolean isCompleted = resourceSupplier.setImage("WallpaperPDF.jpg", chosenFile);
         if(isCompleted)
-            NotificationManager.showSuccessfulInfo(InfoType.SUCCESSFUL_SETTING);
+            NotificationManager.showSuccessfulInfo(InfoType.SUCCESSFUL_SAVE);
         else
-            NotificationManager.showError(InfoType.ERROR_SETTING);
+            NotificationManager.showError(InfoType.ERROR_SAVE);
 
     }
 

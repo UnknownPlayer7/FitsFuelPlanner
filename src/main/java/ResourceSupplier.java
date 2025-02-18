@@ -26,9 +26,9 @@ public class ResourceSupplier {
         return null;
     }
 
-    private byte[] getFileByteArrayFromMainArchive(String name, String dir) {
+    private static byte[] getFileByteArrayFromMainArchive(String name, String dir) {
         if(name != null && dir != null) {
-            try(InputStream in = this.getClass().getResourceAsStream(dir+name)) {
+            try(InputStream in = ResourceSupplier.class.getResourceAsStream(dir+name)) {
 
                 byte[] bytes = new byte[in.available()];
                 in.read(bytes);
@@ -77,7 +77,7 @@ public class ResourceSupplier {
         }
     }
 
-    public byte[] getByteArrayFromTextFile(String fileName) {
+    public static byte[] getByteArrayFromTextFile(String fileName) {
         if(fileName != null)
             return getFileByteArrayFromMainArchive(fileName, TEXTS_DIR);
         return null;

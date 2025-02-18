@@ -142,8 +142,8 @@ public class WriterPdf {
             writeCommonNutrition(document);
 
         }
-        catch(DocumentException | IOException exc){
-            System.out.println(exc.getMessage());
+        catch(Exception exc){
+            return false;
         }
         document.close();
 
