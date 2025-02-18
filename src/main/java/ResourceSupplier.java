@@ -145,7 +145,7 @@ public class ResourceSupplier {
         }
     }
 
-    public static boolean setConfigFile(String fileName, String dir, String key, String value) {
+    public static void setConfigFile(String fileName, String dir, String key, String value) {
         moveConfigFileNearbyJar(fileName,dir);
         Properties properties = new Properties();
         try(InputStream in = Files.newInputStream(Paths.get(JarPath.getPathNearbyJar() + dir + fileName))) {
@@ -156,11 +156,9 @@ public class ResourceSupplier {
         }
         try(OutputStream out = Files.newOutputStream(Paths.get(JarPath.getPathNearbyJar() + dir + fileName))) {
             properties.store(out,"Update properties");
-            return true;
         } catch (Exception e) {
             System.out.println("Exception! Can't update config file." + e);
         }
-        return false;
     }
 
     private static boolean isNotFileExistsNearbyJar(Path filePath) {

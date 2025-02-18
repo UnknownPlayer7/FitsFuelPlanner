@@ -1,6 +1,8 @@
 
 import javafx.scene.control.Alert;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.TextInputDialog;
+import javafx.stage.Stage;
 
 import java.util.Optional;
 
@@ -8,6 +10,7 @@ public class NotificationManager {
 
     public static void showError(InfoType errorType) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
+        setIconFrame(alert);
         alert.setTitle("Зараза!");
         alert.setContentText("— Я вижу, ты отлично находишь общий язык с троллем.\n— У меня большой опыт. Я всю жизнь работаю с идиотами.");
         String message;
@@ -33,6 +36,7 @@ public class NotificationManager {
 
     public static void showSuccessfulInfo(InfoType infoType) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        setIconFrame(alert);
         alert.setTitle("Успех");
         alert.setContentText("Когда умирает мечта, то тьма заполняет опустевшее место.");
         String message;
@@ -55,17 +59,12 @@ public class NotificationManager {
 
     public static void showDialogAndSetElementColor(ElementType elementType) {
         TextInputDialog dialog = new TextInputDialog();
+        setIconFrame(dialog);
         dialog.setTitle(elementType.getDecryption());
         dialog.setContentText("Введите HEX-код цвета:");
         dialog.setHeaderText("Не знаете, что такое HEX-код?\nА может не уверены, где его искать?\nОбратитесь в меню справки.");
         Optional<String> optional = dialog.showAndWait();
-        optional.ifPresent(hexCodeColor -> {
-            chooseAndInvokeSettingMethod(elementType, hexCodeColor);
-            if(ResourceSupplier.setConfigFile("PDF.properties","/config/",elementType.getKey(), hexCodeColor))
-                NotificationManager.showSuccessfulInfo(InfoType.SUCCESSFUL_SETTING);
-            else
-                NotificationManager.showError(InfoType.ERROR_SETTING);
-        });
+        optional.ifPresent(hexCodeColor -> chooseAndInvokeSettingMethod(elementType, hexCodeColor));
     }
 
     private static void chooseAndInvokeSettingMethod(ElementType elementType, String hexCodeColor) {
@@ -93,4 +92,8 @@ public class NotificationManager {
         }
     }
 
+    private static void setIconFrame(Dialog dialog) {
+        Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(Finder.findIcon("/images/Tree.png"));
+    }
 }

@@ -295,6 +295,7 @@ public class WriterPdf {
     public static void setBorderColor(String hexCodeColor) {
         try {
             WriterPdf.borderColor = Color.decode(hexCodeColor);
+            ResourceSupplier.setConfigFile("PDF.properties","/config/","borderColor", hexCodeColor);
             NotificationManager.showSuccessfulInfo(InfoType.SUCCESSFUL_SETTING);
         } catch (NumberFormatException e) {
             NotificationManager.showError(InfoType.ERROR_SETTING);
@@ -304,6 +305,7 @@ public class WriterPdf {
     public static void setTextColorInFrame(String hexCodeColor) {
         try {
             WriterPdf.textColorInFrame = Color.decode(hexCodeColor);
+            ResourceSupplier.setConfigFile("PDF.properties","/config/","textColorInFrame", hexCodeColor);
             NotificationManager.showSuccessfulInfo(InfoType.SUCCESSFUL_SETTING);
         } catch (NumberFormatException e) {
             NotificationManager.showError(InfoType.ERROR_SETTING);
@@ -313,6 +315,7 @@ public class WriterPdf {
     public static void setTextColorBeyondFrame(String hexCodeColor) {
         try {
             WriterPdf.textColorBeyondFrame = Color.decode(hexCodeColor);
+            ResourceSupplier.setConfigFile("PDF.properties","/config/","textColorBeyondFrame", hexCodeColor);
             NotificationManager.showSuccessfulInfo(InfoType.SUCCESSFUL_SETTING);
         } catch (NumberFormatException e) {
             NotificationManager.showError(InfoType.ERROR_SETTING);
@@ -322,6 +325,7 @@ public class WriterPdf {
     public static void setCellColorAnimalElement(String hexCodeColor) {
         try {
             WriterPdf.cellColorAnimalElement = Color.decode(hexCodeColor);
+            ResourceSupplier.setConfigFile("PDF.properties","/config/","cellColorAnimalElement", hexCodeColor);
             NotificationManager.showSuccessfulInfo(InfoType.SUCCESSFUL_SETTING);
         } catch (NumberFormatException e) {
             NotificationManager.showError(InfoType.ERROR_SETTING);
@@ -331,6 +335,7 @@ public class WriterPdf {
     public static void setCellColorPlantElement(String hexCodeColor) {
         try {
             WriterPdf.cellColorPlantElement = Color.decode(hexCodeColor);
+            ResourceSupplier.setConfigFile("PDF.properties","/config/","cellColorPlantElement", hexCodeColor);
             NotificationManager.showSuccessfulInfo(InfoType.SUCCESSFUL_SETTING);
         } catch (NumberFormatException e) {
             NotificationManager.showError(InfoType.ERROR_SETTING);
@@ -340,6 +345,7 @@ public class WriterPdf {
     public static void setCellColorComplexCarb(String hexCodeColor) {
         try {
             WriterPdf.cellColorComplexCarb = Color.decode(hexCodeColor);
+            ResourceSupplier.setConfigFile("PDF.properties","/config/","cellColorComplexCarb", hexCodeColor);
             NotificationManager.showSuccessfulInfo(InfoType.SUCCESSFUL_SETTING);
         } catch (NumberFormatException e) {
             NotificationManager.showError(InfoType.ERROR_SETTING);
@@ -349,6 +355,7 @@ public class WriterPdf {
     public static void setCellColorSimpleCarb(String hexCodeColor) {
         try {
             WriterPdf.cellColorSimpleCarb = Color.decode(hexCodeColor);
+            ResourceSupplier.setConfigFile("PDF.properties","/config/","cellColorSimpleCarb", hexCodeColor);
             NotificationManager.showSuccessfulInfo(InfoType.SUCCESSFUL_SETTING);
         } catch (NumberFormatException e) {
             NotificationManager.showError(InfoType.ERROR_SETTING);
