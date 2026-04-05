@@ -4,7 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import utils.Finder;
+import utils.ResourceSupplier;
 
 import java.io.IOException;
 
@@ -15,7 +15,7 @@ public class ApplicationLauncher extends Application {
         Scene scene = new Scene(fxmlLoader.load(), 737, 482);
         stage.setTitle("Главное меню");
         stage.setScene(scene);
-        stage.getIcons().add(Finder.findIcon("/images/Tree.png"));
+        stage.getIcons().add(ResourceSupplier.findIcon("/images/Tree.png"));
         stage.setResizable(false);
         stage.show();
     }

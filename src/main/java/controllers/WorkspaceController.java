@@ -58,8 +58,8 @@ public class WorkspaceController extends NewTabController implements Initializab
 
     public void addProduct(Goods product){
         super.goods.add(product);
-        Changer.changeLabels(product,this, OperationType.SUM);
-        Changer.changeComboBox(product,this, OperationType.SUM);
+        StringUpdater.updateLabels(product,this, OperationType.SUM);
+        StringUpdater.updateComboBox(product,this, OperationType.SUM);
 
     }
 
@@ -173,7 +173,7 @@ public class WorkspaceController extends NewTabController implements Initializab
             Stage stage =(Stage)menuBar.getScene().getWindow();
             stage.setScene(scene);
             stage.setTitle("Главное меню");
-            stage.getIcons().add(Finder.findIcon("/images/Tree.png"));
+            stage.getIcons().add(ResourceSupplier.findIcon("/images/Tree.png"));
             stage.show();
         }
         catch(IOException exc){

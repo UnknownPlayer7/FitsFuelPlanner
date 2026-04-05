@@ -242,12 +242,12 @@ public class WriterPdf {
         table.addCell(cell);
 
         for(String string: commonNutrition){
-            cell = new PdfPCell(new Phrase(Finder.deleteNumber(string), rusFont14_BOLD));
+            cell = new PdfPCell(new Phrase(StringFinder.deleteNumber(string), rusFont14_BOLD));
             table.addCell(cell);
 
         }
         for(String string: commonNutrition){
-            cell = new PdfPCell(new Phrase(Finder.findNumber(string), rusFont12_BOLD));
+            cell = new PdfPCell(new Phrase(StringFinder.findNumber(string), rusFont12_BOLD));
             cell.setFixedHeight(20f);
             table.addCell(cell);
         }

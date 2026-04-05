@@ -23,7 +23,6 @@ import javafx.stage.Stage;
 import models.Client;
 import models.NewClient;
 import utils.ControllersArchive;
-import utils.Finder;
 import utils.Reader;
 import utils.ResourceSupplier;
 
@@ -50,7 +49,7 @@ public class MainMenuController implements Initializable {
             Stage stage =(Stage)((Node)event.getSource()).getScene().getWindow();
             stage.setScene(scene);
             stage.setTitle("Корзина");
-            stage.getIcons().add(Finder.findIcon("/images/Tree.png"));
+            stage.getIcons().add(ResourceSupplier.findIcon("/images/Tree.png"));
             stage.show();
         }
         catch(IOException exc){

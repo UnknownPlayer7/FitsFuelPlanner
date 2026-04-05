@@ -20,6 +20,10 @@ public class ResourceSupplier {
     private static final String IMAGES_DIR = "/images/";
     private static final String TEXTS_DIR = "/texts/";
 
+    public static Image findIcon(String path){
+        return new Image(String.valueOf(StringFinder.class.getResource(path)));
+    }
+
     private URL getImageFromMainArchive(String name) {
         if(name != null) {
             return this.getClass().getResource(IMAGES_DIR + name);
@@ -176,5 +180,4 @@ public class ResourceSupplier {
             System.out.println("Something went wrong: "+exc );
         }
     }
-
 }
