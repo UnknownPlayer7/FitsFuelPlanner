@@ -39,3 +39,6 @@ build/
 
 ### jar ###
 resource.jar
+
+### dir ###
+Goods/
