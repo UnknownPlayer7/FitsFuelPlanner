@@ -6,7 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import runners.HelloApplication;
+import runners.ApplicationLauncher;
 import utils.Finder;
 
 import java.io.IOException;
@@ -34,7 +34,7 @@ public class ModalWindow {
     }
     private Scene makeScene(String string, int width, int height, String resource) throws IOException {
 
-        FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource(resource));
+        FXMLLoader loader = new FXMLLoader(ApplicationLauncher.class.getResource(resource));
         Scene scene = new Scene(loader.load(), width, height);
         if (string.equals("Справка")) {
             HelpController helpController = loader.getController();

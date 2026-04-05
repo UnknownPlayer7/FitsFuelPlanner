@@ -1,5 +1,6 @@
 package utils;
 
+import constants.OperationType;
 import javafx.scene.image.Image;
 
 import java.util.Scanner;
@@ -7,38 +8,36 @@ import java.util.Scanner;
 public class Finder {
 
 
-    public static String changeNumber(String string, double number){
+    public static String changeNumber(String string, double number, OperationType operation){
         String target = findNumber(string);
-        String newTarget = target.contains(",")? target.replace(",","."): target;
-        Double targetDouble = Double.parseDouble(newTarget) + number;
+        double targetDouble = Double.parseDouble(target.replace(",","."));
+
+        switch (operation) {
+            case SUM:
+               targetDouble += number;
+               break;
+            case SUB:
+                targetDouble -=number;
+        }
         String targetString = String.format("%.1f",targetDouble);
-        String result = string.replace(target,targetString.replace(".",","));
 
-        return result;
-    }
-
-    public static String minusChangeNumber(String string, double number){
-        String target = findNumber(string);
-        String newTarget = target.contains(",")? target.replace(",","."): target;
-        Double targetDouble = Double.parseDouble(newTarget) - number;
-        String targetString = String.format("%.1f",targetDouble);
-        String result = string.replace(target,targetString.replace(".",","));
-
-        return result;
+        return string.replace(target,targetString.replace(".",","));
     }
 
     public static String findNumber(String string){
         String[] words = string.split(" ");
-        String target = "";
-        for(int i=0; i< words.length;i++){
-            Scanner scanner = new Scanner(words[i]);
-            if(scanner.hasNextDouble()){
-                target = words[i];
+        String number = "";
+
+        for (String word : words) {
+            Scanner scanner = new Scanner(word);
+
+            if (scanner.hasNextDouble()) {
+                number = word;
                 scanner.close();
                 break;
             }
         }
-        return target;
+        return number;
     }
 
     public static String deleteNumber(String string){
@@ -69,7 +68,6 @@ public class Finder {
     }
 
     public static Image findIcon(String path){
-        Image icon = new Image(String.valueOf(Finder.class.getResource(path)));
-        return icon;
+        return new Image(String.valueOf(Finder.class.getResource(path)));
     }
 }

@@ -92,7 +92,7 @@
                         <manifest>
                             <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
                             <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
-                            <mainClass>runners.HelloApplication</mainClass>
+                            <mainClass>runners.ApplicationLauncher</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -105,7 +105,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>runners.HelloApplication</mainClass>
+                            <mainClass>runners.ApplicationLauncher</mainClass>
                         </manifest>
                         <manifestEntries>
                             <Class-Path>.</Class-Path>

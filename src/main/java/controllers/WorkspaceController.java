@@ -3,6 +3,7 @@ package controllers;
 import components.ModalWindow;
 import constants.ElementType;
 import constants.InfoType;
+import constants.OperationType;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -57,8 +58,8 @@ public class WorkspaceController extends NewTabController implements Initializab
 
     public void addProduct(Goods product){
         super.goods.add(product);
-        Changer.changeLabels(product,this);
-        Changer.changeComboBox(product,this);
+        Changer.changeLabels(product,this, OperationType.SUM);
+        Changer.changeComboBox(product,this, OperationType.SUM);
 
     }
 
