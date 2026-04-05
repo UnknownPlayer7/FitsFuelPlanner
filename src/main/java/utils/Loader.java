@@ -1,5 +1,6 @@
 package utils;
 
+import constants.OperationType;
 import controllers.NewTabController;
 import controllers.WorkspaceController;
 import javafx.collections.FXCollections;
@@ -31,8 +32,8 @@ public class Loader {
         if (map.containsKey(countOfTabs) && !map.get(countOfTabs).isEmpty()) {
             list = FXCollections.observableArrayList(map.get(countOfTabs));
             tab.addToListProduct(list);
-            Changer.changeLabels(map.get(countOfTabs),workspace);
-            Changer.changeComboBox(map.get(countOfTabs),tab);
+            Changer.changeLabels(map.get(countOfTabs), workspace, OperationType.SUM);
+            Changer.changeComboBox(map.get(countOfTabs), tab, OperationType.SUM);
             countOfTabs++;
             workspace.createNewTab();
         }else{
