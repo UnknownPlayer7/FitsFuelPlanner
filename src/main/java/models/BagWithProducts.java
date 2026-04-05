@@ -1,9 +1,11 @@
+package models;
+
 import java.io.Serializable;
 import java.util.HashMap;
 
 public class BagWithProducts implements Serializable {
 
-    private HashMap<String,Goods> bag = new HashMap<String, Goods>();
+    private HashMap<String, Goods> bag = new HashMap<String, Goods>();
 
     public HashMap<String, Goods> getBag() {
         return bag;

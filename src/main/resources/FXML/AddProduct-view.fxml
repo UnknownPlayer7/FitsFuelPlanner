@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="GoodsCard" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="337.0" prefWidth="520.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AddProductController">
+<AnchorPane fx:id="GoodsCard" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="337.0" prefWidth="520.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AddProductController">
    <children>
       <TextField fx:id="name" layoutX="12.0" layoutY="77.0" prefHeight="25.0" prefWidth="488.0" promptText="Введи название продукта" />
       <TextField fx:id="energyOfProduct" layoutX="302.0" layoutY="117.0" prefHeight="25.0" prefWidth="198.0" promptText="Введи энергитическую ценность" />

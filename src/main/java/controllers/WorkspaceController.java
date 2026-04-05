@@ -1,4 +1,8 @@
+package controllers;
 
+import components.ModalWindow;
+import constants.ElementType;
+import constants.InfoType;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,6 +16,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.MenuBar;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import models.Client;
+import models.Goods;
+import utils.*;
 
 import java.io.File;
 import java.io.IOException;

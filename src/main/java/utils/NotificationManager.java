@@ -1,4 +1,7 @@
+package utils;
 
+import constants.ElementType;
+import constants.InfoType;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.TextInputDialog;
@@ -17,7 +20,7 @@ public class NotificationManager {
     }
 
     public static void showSuccessfulInfo(InfoType infoType) {
-        String[] titleAndContentText = {MyText.getSuccessTitle(),MyText.getSuccessPhrase()};
+        String[] titleAndContentText = {MyText.getSuccessTitle(), MyText.getSuccessPhrase()};
         Alert alert = createAlert(Alert.AlertType.INFORMATION, infoType,titleAndContentText);
         alert.show();
     }

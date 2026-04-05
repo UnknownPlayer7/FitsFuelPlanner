@@ -1,7 +1,14 @@
+package controllers;
+
+import constants.InfoType;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import models.Goods;
+import utils.ControllersArchive;
+import utils.NotificationManager;
+import utils.Save;
 
 public class AddProductController {
 

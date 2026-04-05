@@ -1,4 +1,6 @@
+package utils;
 
+import constants.InfoType;
 import de.schlichtherle.truezip.file.*;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
@@ -7,7 +9,6 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;

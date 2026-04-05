@@ -1,3 +1,5 @@
+package models;
+
 import javafx.scene.Node;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -13,7 +15,7 @@ public class Client extends BagWithProducts implements Serializable {
     private String name;
     private HashMap<Integer, ArrayList<Goods>> map = new HashMap<>();
 
-    Client(String name, TabPane tabPane){
+    public Client(String name, TabPane tabPane){
         this.name = name;
         createStorageProduct(tabPane);
     }

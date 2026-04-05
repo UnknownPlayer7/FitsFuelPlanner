@@ -1,3 +1,4 @@
+package utils;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ public class MyText {
     }
 
     private static void initializeProperties() {
-        properties = ResourceSupplier.getProperties("MyText.properties","/config/");
+        properties = ResourceSupplier.getProperties("utils.MyText.properties","/config/");
     }
 
     private static void initializeCounters() {
@@ -54,14 +55,14 @@ public class MyText {
     public static String getSuccessPhrase() {
         if(isLastElement(invokeSuccessCounter, successPhrases))
             invokeSuccessCounter = 0;
-        ResourceSupplier.setConfigFile("MyText.properties","/config/","invokeSuccessCounter", String.valueOf((invokeSuccessCounter + 1)));
+        ResourceSupplier.setConfigFile("utils.MyText.properties","/config/","invokeSuccessCounter", String.valueOf((invokeSuccessCounter + 1)));
         return successPhrases[invokeSuccessCounter++];
     }
 
     public static String getErrorPhrase() {
         if(isLastElement(invokeErrorCounter, errorPhrases))
             invokeErrorCounter = 0;
-        ResourceSupplier.setConfigFile("MyText.properties","/config/","invokeErrorCounter", String.valueOf((invokeErrorCounter + 1)));
+        ResourceSupplier.setConfigFile("utils.MyText.properties","/config/","invokeErrorCounter", String.valueOf((invokeErrorCounter + 1)));
         return errorPhrases[invokeErrorCounter++];
     }
 

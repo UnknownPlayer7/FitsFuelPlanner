@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane prefHeight="482.0" prefWidth="737.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="WorkspaceController">
+<AnchorPane prefHeight="482.0" prefWidth="737.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.WorkspaceController">
    <children>
       <SplitPane dividerPositions="0.8876651982378855" layoutY="27.0" orientation="VERTICAL" prefHeight="456.0" prefWidth="737.0">
         <items>

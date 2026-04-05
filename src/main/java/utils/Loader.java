@@ -1,6 +1,12 @@
+package utils;
+
+import controllers.NewTabController;
+import controllers.WorkspaceController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Tab;
+import models.Client;
+import models.Goods;
 
 import java.util.ArrayList;
 import java.util.HashMap;

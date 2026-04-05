@@ -1,3 +1,6 @@
+package controllers;
+
+import components.ModalWindow;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -8,6 +11,11 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.KeyCode;
+import models.Goods;
+import models.Client;
+import utils.Changer;
+import utils.ControllersArchive;
+import utils.Loader;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -68,7 +76,7 @@ public class NewTabController implements Initializable {
 
     public void addProduct(Goods product){
         goods.add(new Goods(product));
-        Changer.changeLabels(product,ControllersArchive.getWorkspaceController());
+        Changer.changeLabels(product, ControllersArchive.getWorkspaceController());
         Changer.changeComboBox(product,this);
 
     }
@@ -85,14 +93,14 @@ public class NewTabController implements Initializable {
                 t -> {
                     Goods product = t.getTableView().getItems().get(
                             t.getTablePosition().getRow());
-                    Changer.minusChangeComboBox(product,ControllersArchive.getCurrentTab());
-                    Changer.minusChangeLabels(product,ControllersArchive.getWorkspaceController());
+                    Changer.minusChangeComboBox(product, ControllersArchive.getCurrentTab());
+                    Changer.minusChangeLabels(product, ControllersArchive.getWorkspaceController());
                     product.setOldAmountOfProduct(product.getAmountOfProduct());
                     product.setAmountOfProduct(t.getNewValue());
                     Changer.changeCells(product);
                     t.getTableView().refresh();
-                    Changer.changeComboBox(product,ControllersArchive.getCurrentTab());
-                    Changer.changeLabels(product,ControllersArchive.getWorkspaceController());
+                    Changer.changeComboBox(product, ControllersArchive.getCurrentTab());
+                    Changer.changeLabels(product, ControllersArchive.getWorkspaceController());
 
                 }
         );
@@ -107,8 +115,8 @@ public class NewTabController implements Initializable {
             if(key.getCode() == KeyCode.DELETE){
                 Goods product = (Goods) table.getSelectionModel().getSelectedItem();
                 goods.remove(product);
-                Changer.minusChangeComboBox(product,ControllersArchive.getCurrentTab());
-                Changer.minusChangeLabels(product,ControllersArchive.getWorkspaceController());
+                Changer.minusChangeComboBox(product, ControllersArchive.getCurrentTab());
+                Changer.minusChangeLabels(product, ControllersArchive.getWorkspaceController());
 
             }
         });

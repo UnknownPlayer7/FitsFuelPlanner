@@ -1,3 +1,6 @@
+package controllers;
+
+import components.Cell;
 import de.schlichtherle.truezip.file.TArchiveDetector;
 import de.schlichtherle.truezip.file.TConfig;
 import de.schlichtherle.truezip.fs.archive.zip.JarDriver;
@@ -17,6 +20,12 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import models.Client;
+import models.NewClient;
+import utils.ControllersArchive;
+import utils.Finder;
+import utils.Reader;
+import utils.ResourceSupplier;
 
 import java.io.IOException;
 import java.net.URL;
@@ -63,7 +72,7 @@ public class MainMenuController implements Initializable {
     }
 
     private void setComboBox(){
-        Reader reader = new Reader("/Goods/Client.txt");
+        Reader reader = new Reader("/models.Goods/models.Client.txt");
         ArrayList<Client> clients = reader.readAllClients();
         ObservableList list = FXCollections.observableArrayList(clients);
         clientBox.setItems(list);

@@ -1,3 +1,6 @@
+package controllers;
+
+import components.ModalWindow;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -5,11 +8,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
+import models.Goods;
+import utils.ControllersArchive;
+import utils.Reader;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
@@ -85,7 +89,7 @@ public class LibraryController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ControllersArchive.setLibraryController(this);
-        Reader reader = new Reader("/Goods/Product.txt");
+        Reader reader = new Reader("/models.Goods/Product.txt");
         products = reader.readAllObject();
         fillLibrary(products);
         textField.setOnKeyReleased(this::handleKeyPress);
