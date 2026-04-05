@@ -16,6 +16,12 @@ import java.util.stream.Collectors;
 
 public class Changer {
 
+    public static void changeLabels(ArrayList<Goods> products, WorkspaceController controller, OperationType operation){
+        for(Goods product : products) {
+            changeLabels(product, controller, operation);
+        }
+    }
+
     public static void changeLabels(Goods product, WorkspaceController controller, OperationType operation) {
         changeNumber(controller.getAmountOfEnergyLabelMain(),product.getAmountOfEnergy(), operation);
         changeNumber(controller.getFatLabelMain(),product.getFat(), operation);
@@ -29,12 +35,21 @@ public class Changer {
         label.setText(string);
     }
 
+    public static void changeComboBox(ArrayList<Goods> products, NewTabController controller, OperationType operation) {
+        for(Goods product : products) {
+            changeComboBox(product, controller, operation);
+        }
+    }
+
     public static void changeComboBox(Goods product, NewTabController controller, OperationType operation) {
         changeNumber(controller.getAmountOfEnergyLabel(),product.getAmountOfEnergy(), operation);
+
         changeNumber(controller.getFatBox(),product.getFat(), Finder.findElementType(product.getTypeOfFat()), operation);
         controller.getFatBox().getSelectionModel().select(0);
+
         changeNumber(controller.getCarbBox(),product.getCarb(), Finder.findElementType(product.getTypeOfCarb()), operation);
         controller.getCarbBox().getSelectionModel().select(0);
+
         changeNumber(controller.getProteinBox(),product.getProtein(), Finder.findElementType(product.getTypeOfProtein()), operation);
         controller.getProteinBox().getSelectionModel().select(0);
     }
@@ -61,33 +76,10 @@ public class Changer {
     public  static void changeCells(Goods product) {
         double amountOfProduct = Double.parseDouble(product.getAmountOfProduct());
         double oldAmountOfProduct = Double.parseDouble(product.getOldAmountOfProduct());
-        product.setCarb(product.getCarb()*amountOfProduct/oldAmountOfProduct);
-        product.setFat(product.getFat()*amountOfProduct/oldAmountOfProduct);
-        product.setProtein(product.getProtein()*amountOfProduct/oldAmountOfProduct);
-        product.setAmountOfEnergy(product.getAmountOfEnergy()*amountOfProduct/oldAmountOfProduct);
+
+        product.setCarb(product.getCarb() * amountOfProduct / oldAmountOfProduct);
+        product.setFat(product.getFat() * amountOfProduct / oldAmountOfProduct);
+        product.setProtein(product.getProtein() * amountOfProduct / oldAmountOfProduct);
+        product.setAmountOfEnergy(product.getAmountOfEnergy() * amountOfProduct / oldAmountOfProduct);
     }
-
-    public static void changeComboBox(ArrayList<Goods> products, NewTabController controller, OperationType operation){
-        for(Goods product: products){
-            changeNumber(controller.getAmountOfEnergyLabel(),product.getAmountOfEnergy(), operation);
-            changeNumber(controller.getFatBox(),product.getFat(), Finder.findElementType(product.getTypeOfFat()), operation);
-            controller.getFatBox().getSelectionModel().select(0);
-            changeNumber(controller.getCarbBox(),product.getCarb(), Finder.findElementType(product.getTypeOfCarb()), operation);
-            controller.getCarbBox().getSelectionModel().select(0);
-            changeNumber(controller.getProteinBox(),product.getProtein(), Finder.findElementType(product.getTypeOfProtein()), operation);
-            controller.getProteinBox().getSelectionModel().select(0);
-        }
-
-    }
-
-    public static void changeLabels(ArrayList<Goods> products, WorkspaceController controller, OperationType operation){
-        for(Goods product:products){
-            changeNumber(controller.getAmountOfEnergyLabelMain(),product.getAmountOfEnergy(), operation);
-            changeNumber(controller.getFatLabelMain(),product.getFat(), operation);
-            changeNumber(controller.getCarbLabelMain(),product.getCarb(), operation);
-            changeNumber(controller.getProteinLabelMain(),product.getProtein(), operation);
-        }
-
-    }
-
 }
