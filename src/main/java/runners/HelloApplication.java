@@ -1,7 +1,10 @@
+package runners;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import utils.Finder;
 
 import java.io.IOException;
 

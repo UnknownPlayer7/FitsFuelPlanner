@@ -1,6 +1,9 @@
+package components;
+
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.util.Callback;
+import models.Client;
 
 public class Cell {
 

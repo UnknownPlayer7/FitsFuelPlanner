@@ -1,3 +1,5 @@
+package constants;
+
 public enum ElementType {
     BORDER("Рамка","borderColor"),
     TEXT_IN_FRAME("Текст в рамке", "textColorInFrame"),

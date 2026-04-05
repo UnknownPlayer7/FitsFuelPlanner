@@ -1,12 +1,17 @@
+package utils;
+
+import models.Client;
+import models.Goods;
+
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class Save {
-    private static final Path PATH_GOODS_DIR = Paths.get(JarPath.getPathNearbyJar()+"/Goods");
-    private static final File FILE_PRODUCTS = new File(JarPath.getPathNearbyJar()+"/Goods/Product.txt");
-    private static final File FILE_CLIENTS = new File(JarPath.getPathNearbyJar()+"/Goods/Client.txt");
+    private static final Path PATH_GOODS_DIR = Paths.get(JarPath.getPathNearbyJar()+"/models.Goods");
+    private static final File FILE_PRODUCTS = new File(JarPath.getPathNearbyJar()+"/models.Goods/Product.txt");
+    private static final File FILE_CLIENTS = new File(JarPath.getPathNearbyJar()+"/models.Goods/models.Client.txt");
 
     public static boolean saveProduct(Goods object){
         if(createDirectory(PATH_GOODS_DIR)) {
@@ -21,7 +26,7 @@ public class Save {
 
         }
         catch(IOException | ClassCastException exc){
-            System.out.println("Something went wrong while programme was trying to save Goods: "+exc );
+            System.out.println("Something went wrong while programme was trying to save models.Goods: "+exc );
             return false;
         }
 

@@ -1,7 +1,12 @@
+package utils;
+
+import controllers.NewTabController;
+import controllers.WorkspaceController;
 import javafx.collections.FXCollections;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import models.Goods;
 
 import java.util.ArrayList;
 
@@ -61,41 +66,41 @@ public class Changer {
 
     }
 
-    protected static void changeLabels(Goods product, WorkspaceController controller){
+    public static void changeLabels(Goods product, WorkspaceController controller){
         changeNumber(controller.getAmountOfEnergyLabelMain(),product.getAmountOfEnergy());
         changeNumber(controller.getFatLabelMain(),product.getFat());
         changeNumber(controller.getCarbLabelMain(),product.getCarb());
         changeNumber(controller.getProteinLabelMain(),product.getProtein());
     }
 
-    protected static void minusChangeLabels(Goods product, WorkspaceController controller){
+    public static void minusChangeLabels(Goods product, WorkspaceController controller){
         minusChangeNumber(controller.getAmountOfEnergyLabelMain(),product.getAmountOfEnergy());
         minusChangeNumber(controller.getFatLabelMain(),product.getFat());
         minusChangeNumber(controller.getCarbLabelMain(),product.getCarb());
         minusChangeNumber(controller.getProteinLabelMain(),product.getProtein());
     }
 
-    protected static void changeComboBox(Goods product, NewTabController controller){
+    public static void changeComboBox(Goods product, NewTabController controller){
         changeNumber(controller.getAmountOfEnergyLabel(),product.getAmountOfEnergy());
         changeNumber(controller.getFatBox(),product.getFat(), Finder.findElementType(product.getTypeOfFat()));
         controller.getFatBox().getSelectionModel().select(0);
         changeNumber(controller.getCarbBox(),product.getCarb(), Finder.findElementType(product.getTypeOfCarb()));
         controller.getCarbBox().getSelectionModel().select(0);
-        changeNumber(controller.getProteinBox(),product.getProtein(),Finder.findElementType(product.getTypeOfProtein()));
+        changeNumber(controller.getProteinBox(),product.getProtein(), Finder.findElementType(product.getTypeOfProtein()));
         controller.getProteinBox().getSelectionModel().select(0);
     }
 
-    protected static void minusChangeComboBox(Goods product, NewTabController controller){
+    public static void minusChangeComboBox(Goods product, NewTabController controller){
         minusChangeNumber(controller.getAmountOfEnergyLabel(),product.getAmountOfEnergy());
         minusChangeNumber(controller.getFatBox(),product.getFat(), Finder.findElementType(product.getTypeOfFat()));
         controller.getFatBox().getSelectionModel().select(0);
         minusChangeNumber(controller.getCarbBox(),product.getCarb(), Finder.findElementType(product.getTypeOfCarb()));
         controller.getCarbBox().getSelectionModel().select(0);
-        minusChangeNumber(controller.getProteinBox(),product.getProtein(),Finder.findElementType(product.getTypeOfProtein()));
+        minusChangeNumber(controller.getProteinBox(),product.getProtein(), Finder.findElementType(product.getTypeOfProtein()));
         controller.getProteinBox().getSelectionModel().select(0);
     }
 
-    protected  static void changeCells(Goods product){
+    public  static void changeCells(Goods product){
 
         double amountOfProduct = Double.parseDouble(product.getAmountOfProduct());
         double oldAmountOfProduct = Double.parseDouble(product.getOldAmountOfProduct());
@@ -105,20 +110,20 @@ public class Changer {
         product.setAmountOfEnergy(product.getAmountOfEnergy()*amountOfProduct/oldAmountOfProduct);
     }
 
-    protected static void changeComboBox(ArrayList<Goods> products, NewTabController controller){
+    public static void changeComboBox(ArrayList<Goods> products, NewTabController controller){
         for(Goods product: products){
             changeNumber(controller.getAmountOfEnergyLabel(),product.getAmountOfEnergy());
             changeNumber(controller.getFatBox(),product.getFat(), Finder.findElementType(product.getTypeOfFat()));
             controller.getFatBox().getSelectionModel().select(0);
             changeNumber(controller.getCarbBox(),product.getCarb(), Finder.findElementType(product.getTypeOfCarb()));
             controller.getCarbBox().getSelectionModel().select(0);
-            changeNumber(controller.getProteinBox(),product.getProtein(),Finder.findElementType(product.getTypeOfProtein()));
+            changeNumber(controller.getProteinBox(),product.getProtein(), Finder.findElementType(product.getTypeOfProtein()));
             controller.getProteinBox().getSelectionModel().select(0);
         }
 
     }
 
-    protected static void changeLabels(ArrayList<Goods> products, WorkspaceController controller){
+    public static void changeLabels(ArrayList<Goods> products, WorkspaceController controller){
         for(Goods product:products){
             changeNumber(controller.getAmountOfEnergyLabelMain(),product.getAmountOfEnergy());
             changeNumber(controller.getFatLabelMain(),product.getFat());

@@ -1,3 +1,8 @@
+package utils;
+
+import models.Client;
+import models.Goods;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -86,7 +91,7 @@ public class Reader {
             }
         }
         catch(IOException  | ClassNotFoundException exc){
-            System.out.println("Goods wasn't been able to read: "+exc );
+            System.out.println("models.Goods wasn't been able to read: "+exc );
         }
 
         return array;
@@ -109,7 +114,7 @@ public class Reader {
             }
         }
         catch(IOException  | ClassNotFoundException exc){
-            System.out.println("Client's wasn't able to read: "+exc );
+            System.out.println("models.Client's wasn't able to read: "+exc );
         }
 
         return array;

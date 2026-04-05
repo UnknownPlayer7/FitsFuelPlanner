@@ -1,3 +1,5 @@
+package constants;
+
 public enum InfoType {
 
     SUCCESSFUL_CREATE("Создание выполнено!"),

@@ -1,8 +1,13 @@
+package components;
+
+import controllers.HelpController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import runners.HelloApplication;
+import utils.Finder;
 
 import java.io.IOException;
 

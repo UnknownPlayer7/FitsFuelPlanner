@@ -1,7 +1,12 @@
+package utils;
+
 import com.lowagie.text.Font;
 import com.lowagie.text.Image;
 import com.lowagie.text.*;
 import com.lowagie.text.pdf.*;
+import constants.InfoType;
+import models.Client;
+import models.Goods;
 
 import java.awt.*;
 import java.io.FileOutputStream;
@@ -39,7 +44,7 @@ public class WriterPdf {
         registerFonts();
     }
 
-    WriterPdf(String name,Client client,ArrayList<String> titles,ArrayList<String> commonNutrition){
+    public WriterPdf(String name,Client client,ArrayList<String> titles,ArrayList<String> commonNutrition){
         initializeFonts();
         this.name = name;
         this.client = client;

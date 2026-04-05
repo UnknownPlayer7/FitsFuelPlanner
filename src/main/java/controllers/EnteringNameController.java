@@ -1,3 +1,6 @@
+package controllers;
+
+import constants.InfoType;
 import javafx.fxml.FXML;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
@@ -5,6 +8,10 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import models.Client;
+import utils.ControllersArchive;
+import utils.NotificationManager;
+import utils.Save;
 
 public class EnteringNameController {
 

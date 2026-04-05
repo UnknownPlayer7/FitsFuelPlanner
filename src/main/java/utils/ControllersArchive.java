@@ -1,3 +1,7 @@
+package utils;
+
+import controllers.*;
+
 public class ControllersArchive {
     private static AddProductController addProductController;
     private static WorkspaceController workspaceController;

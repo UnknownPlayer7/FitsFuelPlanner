@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane fx:id="anchorPaneBreakfast" minHeight="0.0" minWidth="0.0" prefHeight="377.0" prefWidth="735.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NewTabController">
+<AnchorPane fx:id="anchorPaneBreakfast" minHeight="0.0" minWidth="0.0" prefHeight="377.0" prefWidth="735.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.NewTabController">
    <children>
       <Button layoutX="14.0" layoutY="293.0" mnemonicParsing="false" onAction="#ok" prefHeight="25.0" prefWidth="79.0" text="Добавить" />
       <TableView fx:id="table" layoutY="9.0" prefHeight="284.0" prefWidth="735.0">

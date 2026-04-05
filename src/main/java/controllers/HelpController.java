@@ -1,5 +1,10 @@
+package controllers;
+
+import constants.InfoType;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import utils.NotificationManager;
+import utils.ResourceSupplier;
 
 import java.nio.charset.StandardCharsets;
 
