@@ -14,7 +14,7 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.KeyCode;
 import models.Goods;
 import models.Client;
-import utils.Changer;
+import utils.StringUpdater;
 import utils.ControllersArchive;
 import utils.Loader;
 
@@ -77,8 +77,8 @@ public class NewTabController implements Initializable {
 
     public void addProduct(Goods product){
         goods.add(new Goods(product));
-        Changer.changeLabels(product, ControllersArchive.getWorkspaceController(), OperationType.SUM);
-        Changer.changeComboBox(product,this, OperationType.SUM);
+        StringUpdater.updateLabels(product, ControllersArchive.getWorkspaceController(), OperationType.SUM);
+        StringUpdater.updateComboBox(product,this, OperationType.SUM);
 
     }
 
@@ -94,14 +94,14 @@ public class NewTabController implements Initializable {
                 t -> {
                     Goods product = t.getTableView().getItems().get(
                             t.getTablePosition().getRow());
-                    Changer.changeComboBox(product, ControllersArchive.getCurrentTab(), OperationType.SUB);
-                    Changer.changeLabels(product, ControllersArchive.getWorkspaceController(), OperationType.SUB);
+                    StringUpdater.updateComboBox(product, ControllersArchive.getCurrentTab(), OperationType.SUB);
+                    StringUpdater.updateLabels(product, ControllersArchive.getWorkspaceController(), OperationType.SUB);
                     product.setOldAmountOfProduct(product.getAmountOfProduct());
                     product.setAmountOfProduct(t.getNewValue());
-                    Changer.changeCells(product);
+                    StringUpdater.updateCells(product);
                     t.getTableView().refresh();
-                    Changer.changeComboBox(product, ControllersArchive.getCurrentTab(), OperationType.SUM);
-                    Changer.changeLabels(product, ControllersArchive.getWorkspaceController(), OperationType.SUM);
+                    StringUpdater.updateComboBox(product, ControllersArchive.getCurrentTab(), OperationType.SUM);
+                    StringUpdater.updateLabels(product, ControllersArchive.getWorkspaceController(), OperationType.SUM);
 
                 }
         );
@@ -116,8 +116,8 @@ public class NewTabController implements Initializable {
             if(key.getCode() == KeyCode.DELETE){
                 Goods product = (Goods) table.getSelectionModel().getSelectedItem();
                 goods.remove(product);
-                Changer.changeComboBox(product, ControllersArchive.getCurrentTab(), OperationType.SUB);
-                Changer.changeLabels(product, ControllersArchive.getWorkspaceController(), OperationType.SUB);
+                StringUpdater.updateComboBox(product, ControllersArchive.getCurrentTab(), OperationType.SUB);
+                StringUpdater.updateLabels(product, ControllersArchive.getWorkspaceController(), OperationType.SUB);
 
             }
         });

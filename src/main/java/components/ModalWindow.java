@@ -7,7 +7,7 @@ import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import runners.ApplicationLauncher;
-import utils.Finder;
+import utils.ResourceSupplier;
 
 import java.io.IOException;
 
@@ -17,7 +17,7 @@ public class ModalWindow {
     public void newWindow(int width, int height, String title, String resource, String pathIcon) {
 
         Stage stage = new Stage();
-        Image icon = Finder.findIcon(pathIcon);
+        Image icon = ResourceSupplier.findIcon(pathIcon);
 
         stage.initModality(Modality.APPLICATION_MODAL);
         try {

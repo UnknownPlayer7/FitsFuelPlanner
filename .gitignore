@@ -42,3 +42,6 @@ resource.jar
 
 ### dir ###
 Goods/
+
+### pdf ###
+*.pdf

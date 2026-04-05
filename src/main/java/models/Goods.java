@@ -13,8 +13,8 @@ public class Goods implements Serializable {
     private String typeOfFat;
     String key;
     private String typeOfCarb;
-    private String amountOfProduct = "100";
-    private String oldAmountOfProduct ="1";
+    private String amountOfProduct;
+    private String oldAmountOfProduct;
 
     public Goods(String name, double amountOfEnergy, double protein,String typeOfProtein,
                  double carb,String typeOfCarb, double fat, String typeOfFat, String key){
@@ -27,6 +27,8 @@ public class Goods implements Serializable {
         this.typeOfFat = typeOfFat;
         this.key = key;
         this.typeOfCarb = typeOfCarb;
+        this.amountOfProduct = "100";
+        this.oldAmountOfProduct = this.amountOfProduct;
     }
 
     public Goods(Goods product){

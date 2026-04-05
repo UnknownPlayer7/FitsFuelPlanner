@@ -77,6 +77,6 @@ public class NotificationManager {
 
     private static void setIconFrame(Dialog<?> dialog) {
         Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
-        stage.getIcons().add(Finder.findIcon("/images/Tree.png"));
+        stage.getIcons().add(ResourceSupplier.findIcon("/images/Tree.png"));
     }
 }

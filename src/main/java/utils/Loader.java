@@ -32,8 +32,8 @@ public class Loader {
         if (map.containsKey(countOfTabs) && !map.get(countOfTabs).isEmpty()) {
             list = FXCollections.observableArrayList(map.get(countOfTabs));
             tab.addToListProduct(list);
-            Changer.changeLabels(map.get(countOfTabs), workspace, OperationType.SUM);
-            Changer.changeComboBox(map.get(countOfTabs), tab, OperationType.SUM);
+            StringUpdater.updateLabels(map.get(countOfTabs), workspace, OperationType.SUM);
+            StringUpdater.updateComboBox(map.get(countOfTabs), tab, OperationType.SUM);
             countOfTabs++;
             workspace.createNewTab();
         }else{
