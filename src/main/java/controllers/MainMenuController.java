@@ -1,6 +1,6 @@
 package controllers;
 
-import components.Cell;
+import options.ComboBoxOptions;
 import de.schlichtherle.truezip.file.TArchiveDetector;
 import de.schlichtherle.truezip.file.TConfig;
 import de.schlichtherle.truezip.fs.archive.zip.JarDriver;
@@ -75,8 +75,8 @@ public class MainMenuController implements Initializable {
         ArrayList<Client> clients = reader.readAllClients();
         ObservableList list = FXCollections.observableArrayList(clients);
         clientBox.setItems(list);
-        clientBox.setCellFactory(Cell.getCallBack());
-        clientBox.setButtonCell(Cell.getListCell());
+        clientBox.setCellFactory(ComboBoxOptions.getCallBack());
+        clientBox.setButtonCell(ComboBoxOptions.getListCell());
         list.add(0, NewClient.getInstance());
         clientBox.setValue(clientBox.getItems().get(0));
         clientBox.setStyle("-fx-font-size: 12px; -fx-font-family: 'System';");
