@@ -49,9 +49,9 @@ public class LibraryController implements Initializable {
 
     @FXML
     void addElement(ActionEvent event) {
-        ModalWindow addWindow = new ModalWindow();
-        addWindow.newWindow(520,337,"Добавление продукта","/FXML/AddProduct-view.fxml",
+        ModalWindow addWindow = new ModalWindow(520,337,"Добавление продукта","/FXML/AddProduct-view.fxml",
                 "/images/icoBag.png");
+        addWindow.invokeWindow();
     }
 
 

@@ -247,9 +247,9 @@ public class WorkspaceController extends NewTabController implements Initializab
     @FXML
     void showHelpInfo(ActionEvent event) {
 
-        ModalWindow helpWindow = new ModalWindow();
-        helpWindow.newWindow(650,305,"Справка","/FXML/Help-view.fxml",
+        ModalWindow helpWindow = new ModalWindow(650,305,"Справка","/FXML/Help-view.fxml",
                 "/images/iconHelp.png");
+        helpWindow.invokeWindow();
 
     }
 

@@ -13,30 +13,45 @@ import java.io.IOException;
 
 public class ModalWindow {
 
+    private final int width;
+    private final int height;
+    private final String title;
+    private final String resource;
+    private final Image icon;
 
-    public void newWindow(int width, int height, String title, String resource, String pathIcon) {
+    public ModalWindow(int width, int height, String title, String resource, String pathIcon) {
+        this.width = width;
+        this.height = height;
+        this.title = title;
+        this.resource = resource;
+        this.icon = ResourceSupplier.findIcon(pathIcon);
+    }
 
+    public void invokeWindow() {
+        makeStage().show();
+    }
+
+    private Stage makeStage() {
         Stage stage = new Stage();
-        Image icon = ResourceSupplier.findIcon(pathIcon);
 
         stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle(title);
+        stage.getIcons().add(icon);
+        stage.setResizable(false);
+
         try {
-
-            Scene scene = makeScene(title,width,height,resource);
-            stage.setTitle(title);
-            stage.setScene(scene);
-            stage.getIcons().add(icon);
-            stage.setResizable(false);
-            stage.show();
-        } catch (Exception exc) {
-            System.out.println("Не удалось загрузить сцену " + exc);
+            stage.setScene(makeScene());
+        } catch (IOException e) {
+            System.out.printf("Couldn't make a scene related to %s. Cause: %s%n", title, e);
         }
+        return stage;
     }
-    private Scene makeScene(String string, int width, int height, String resource) throws IOException {
 
+    private Scene makeScene() throws IOException {
         FXMLLoader loader = new FXMLLoader(ApplicationLauncher.class.getResource(resource));
         Scene scene = new Scene(loader.load(), width, height);
-        if (string.equals("Справка")) {
+
+        if (title.equals("Справка")) {
             HelpController helpController = loader.getController();
             helpController.printHelpInfo();
         }
