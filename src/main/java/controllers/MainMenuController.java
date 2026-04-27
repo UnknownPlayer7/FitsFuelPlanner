@@ -61,25 +61,39 @@ public class MainMenuController implements Initializable {
         return clientBox;
     }
 
-    private void setWallpaper(){
+    private void setWallpaper() {
         ResourceSupplier resourceSupplier = new ResourceSupplier();
         Image image = resourceSupplier.getImage("WallpaperMainMenu.jpg");
+
         wallpaper.setImage(image);
         wallpaper.setFitHeight(wallpaper.getScene().getHeight());
         wallpaper.setFitWidth(wallpaper.getScene().getWidth());
         wallpaper.setPreserveRatio(false);
     }
 
-    private void setComboBox(){
+    private void setComboBox() {
         Reader reader = new Reader("/models.Goods/models.Client.txt");
         ArrayList<Client> clients = reader.readAllClients();
-        ObservableList list = FXCollections.observableArrayList(clients);
+        ObservableList<Client> list = FXCollections.observableArrayList(clients);
+
         clientBox.setItems(list);
         clientBox.setCellFactory(ComboBoxOptions.getCallBack());
         clientBox.setButtonCell(ComboBoxOptions.getListCell());
+
         list.add(0, NewClient.getInstance());
+
         clientBox.setValue(clientBox.getItems().get(0));
         clientBox.setStyle("-fx-font-size: 12px; -fx-font-family: 'System';");
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        Platform.runLater(() -> {
+            setUpArchiveDetector();
+            ControllersArchive.setMainMenuController(this);
+            setWallpaper();
+            setComboBox();
+        });
     }
 
     private void setUpArchiveDetector() {
@@ -90,15 +104,5 @@ public class MainMenuController implements Initializable {
                                 { "jar", new JarDriver(IOPoolLocator.SINGLETON) },
                                 { "zip", new ZipDriver(IOPoolLocator.SINGLETON)},
                         }));
-    }
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        Platform.runLater(()->{
-            setUpArchiveDetector();
-            ControllersArchive.setMainMenuController(this);
-            setWallpaper();
-            setComboBox();
-        });
     }
 }

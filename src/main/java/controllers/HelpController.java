@@ -16,7 +16,7 @@ public class HelpController {
     private Label infoText;
 
     public void printHelpInfo() {
-        try{
+        try {
             String text = new String(ResourceSupplier.getByteArrayFromTextFile("Help.txt"),StandardCharsets.UTF_8);
             helpText.setText(text);
         } catch (Exception e) {
@@ -24,7 +24,7 @@ public class HelpController {
         }
     }
 
-    public void printInfo(String info){
+    public void printInfo(String info) {
         infoText.setText(info);
     }
 }

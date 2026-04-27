@@ -9,23 +9,26 @@ import java.io.Serializable;
 
 public class NewClient extends Client implements Serializable {
     private static NewClient instance;
-    private NewClient(){
-        super("Новый клиент",createTabPane());
+
+    private NewClient() {
+        super("New client",createTabPane());
     }
 
-    public static NewClient getInstance(){
+    public static NewClient getInstance() {
         if(instance == null){
             instance = new NewClient();
         }
         return instance;
     }
 
-    private static TabPane createTabPane(){
+    private static TabPane createTabPane() {
         TabPane newTabPane = new TabPane();
         Tab tab = new Tab();
         AnchorPane anchorPane = new AnchorPane(new TableView<Goods>());
+
         tab.setContent(anchorPane);
         newTabPane.getTabs().add(tab);
+
         return newTabPane;
     }
 

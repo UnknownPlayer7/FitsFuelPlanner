@@ -56,11 +56,10 @@ public class WorkspaceController extends NewTabController implements Initializab
     private Client client;
 
 
-    public void addProduct(Goods product){
+    public void addProduct(Goods product) {
         super.goods.add(product);
         StringUpdater.updateLabels(product,this, OperationType.SUM);
         StringUpdater.updateComboBox(product,this, OperationType.SUM);
-
     }
 
     public Label getAmountOfEnergyLabelMain() {
@@ -83,26 +82,26 @@ public class WorkspaceController extends NewTabController implements Initializab
         return tabPane;
     }
 
-    public void createNewTab(){
+    public void createNewTab() {
         Tab newTab;
         amountOfTabs++;
-        if(amountOfTabs == 1){
+        if (amountOfTabs == 1) {
             newTab = new Tab("Завтрак");
-        } else if(amountOfTabs == 2){
+        } else if (amountOfTabs == 2) {
             newTab = new Tab("Обед");
-        }else if(amountOfTabs == 3){
+        } else if (amountOfTabs == 3) {
             newTab = new Tab("Ужин");
-        }else newTab = new Tab("Перекус "+(amountOfTabs-3));
+        } else newTab = new Tab("Перекус "+(amountOfTabs-3));
         Loader.setCurrentTab(newTab);
         tabPane.getTabs().add(tabPane.getTabs().size() - 1, newTab);
         tabPane.getSelectionModel().select(newTab);
         FXMLLoader fxmlLoader = new FXMLLoader(WorkspaceController.class.getResource("/FXML/NewTab-view.fxml"));
-        try{
+        try {
             Scene scene = new Scene(fxmlLoader.load(), 735, 377);
             Node root = scene.getRoot();
             newTab.setContent(root);
         }
-        catch(IOException exc){
+        catch(IOException exc) {
             NotificationManager.showError(InfoType.ERROR_LOAD);
         }
     }
@@ -123,7 +122,7 @@ public class WorkspaceController extends NewTabController implements Initializab
         return client;
     }
 
-    private void setClientOptions(){
+    private void setClientOptions() {
         client = ControllersArchive.getMainMenuController().getClientBox().getSelectionModel().getSelectedItem();
     }
 

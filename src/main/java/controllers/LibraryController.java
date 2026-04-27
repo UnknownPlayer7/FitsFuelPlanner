@@ -17,7 +17,6 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 
 public class LibraryController implements Initializable {
@@ -37,14 +36,18 @@ public class LibraryController implements Initializable {
     @FXML
     void handleKeyPress(KeyEvent event) {
         String filter = textField.getText();
-        Stream<Goods> stream = products.stream().filter(product -> {
-            String name = product.getName();
-            String key = product.getKey();
-            return name.startsWith(filter) || key.startsWith(filter);
-        });
-        List<Goods> fProducts =stream.collect(Collectors.toList());
+
+        List<Goods> productsToStore = products
+                .stream()
+                .filter(product -> {
+                    String name = product.getName();
+                    String key = product.getKey();
+                    return name.startsWith(filter) || key.startsWith(filter);
+                })
+                .collect(Collectors.toList());
+
         flowPane.getChildren().remove(1,flowPane.getChildren().size());
-        fillLibrary(fProducts);
+        fillLibrary(productsToStore);
     }
 
     @FXML
@@ -55,45 +58,45 @@ public class LibraryController implements Initializable {
     }
 
 
-    public void putInLib(Goods product){
+    public void putInLib(Goods product) {
         products.add(product);
-        Button button = new Button(product.getName());
-        button.setOnMouseClicked(x -> {
-            ControllersArchive.getCurrentTab().addProduct(product);
-        });
-        button.setPrefWidth(135);
-        button.setPrefHeight(80);
+
+        Button button = createProductButton(product);
         flowPane.getChildren().add(button);
     }
 
-    private void setPropertyScrollPane(){
-        scrollPane.setFitToWidth(true);
-        scrollPane.setFitToHeight(true);
+    private Button createProductButton(Goods product) {
+        Button button = new Button(product.getName());
+
+        button.setOnMouseClicked(x -> ControllersArchive.getCurrentTabController().addProduct(product));
+        button.setPrefWidth(135);
+        button.setPrefHeight(80);
+
+        return button;
     }
 
-    private void fillLibrary(List<Goods> products){
-        if(products != null){
-            for(Goods product:products){
-                Button button = new Button(product.getName());
-                button.setOnMouseClicked(x -> {
-                    ControllersArchive.getCurrentTab().addProduct(product);
-                });
-                button.setPrefWidth(135);
-                button.setPrefHeight(80);
+    private void fillLibrary(List<Goods> products) {
+        if (products != null) {
+            for (Goods product:products) {
+                Button button = createProductButton(product);
                 flowPane.getChildren().add(button);
             }
         }
     }
 
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ControllersArchive.setLibraryController(this);
         Reader reader = new Reader("/models.Goods/Product.txt");
+
         products = reader.readAllObject();
         fillLibrary(products);
         textField.setOnKeyReleased(this::handleKeyPress);
         setPropertyScrollPane();
+    }
 
+    private void setPropertyScrollPane() {
+        scrollPane.setFitToWidth(true);
+        scrollPane.setFitToHeight(true);
     }
 }

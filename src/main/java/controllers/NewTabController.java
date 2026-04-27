@@ -75,14 +75,15 @@ public class NewTabController implements Initializable {
 
 
 
-    public void addProduct(Goods product){
+    public void addProduct(Goods product) {
         goods.add(new Goods(product));
+
         StringUpdater.updateLabels(product, ControllersArchive.getWorkspaceController(), OperationType.SUM);
         StringUpdater.updateComboBox(product,this, OperationType.SUM);
 
     }
 
-    protected void setPropertyColumns(){
+    protected void setPropertyColumns() {
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         carbColumn.setCellValueFactory(new PropertyValueFactory<>("carb"));
         proteinColumn.setCellValueFactory(new PropertyValueFactory<>("protein"));
@@ -94,13 +95,13 @@ public class NewTabController implements Initializable {
                 t -> {
                     Goods product = t.getTableView().getItems().get(
                             t.getTablePosition().getRow());
-                    StringUpdater.updateComboBox(product, ControllersArchive.getCurrentTab(), OperationType.SUB);
+                    StringUpdater.updateComboBox(product, ControllersArchive.getCurrentTabController(), OperationType.SUB);
                     StringUpdater.updateLabels(product, ControllersArchive.getWorkspaceController(), OperationType.SUB);
                     product.setOldAmountOfProduct(product.getAmountOfProduct());
                     product.setAmountOfProduct(t.getNewValue());
                     StringUpdater.updateCells(product);
                     t.getTableView().refresh();
-                    StringUpdater.updateComboBox(product, ControllersArchive.getCurrentTab(), OperationType.SUM);
+                    StringUpdater.updateComboBox(product, ControllersArchive.getCurrentTabController(), OperationType.SUM);
                     StringUpdater.updateLabels(product, ControllersArchive.getWorkspaceController(), OperationType.SUM);
 
                 }
@@ -109,21 +110,21 @@ public class NewTabController implements Initializable {
 
     }
 
-    protected void setPropertyTable(TableView table){
+    protected void setPropertyTable(TableView table) {
         table.setItems(goods);
         table.setEditable(true);
-        table.setOnKeyPressed(key ->{
-            if(key.getCode() == KeyCode.DELETE){
+        table.setOnKeyPressed(key -> {
+            if(key.getCode() == KeyCode.DELETE) {
                 Goods product = (Goods) table.getSelectionModel().getSelectedItem();
                 goods.remove(product);
-                StringUpdater.updateComboBox(product, ControllersArchive.getCurrentTab(), OperationType.SUB);
+                StringUpdater.updateComboBox(product, ControllersArchive.getCurrentTabController(), OperationType.SUB);
                 StringUpdater.updateLabels(product, ControllersArchive.getWorkspaceController(), OperationType.SUB);
 
             }
         });
     }
 
-    protected void setPropertyBoxes(){
+    protected void setPropertyBoxes() {
         carbBox.setItems(FXCollections.observableArrayList("Углеводы: 0","Простые углеводы: 0","Сложные углеводы: 0"));
         carbBox.getSelectionModel().select(0);
         fatBox.setItems(FXCollections.observableArrayList("Жиры: 0","Животные жиры: 0","Растительные жиры: 0"));
@@ -132,10 +133,10 @@ public class NewTabController implements Initializable {
         proteinBox.getSelectionModel().select(0);
     }
 
-    private void setPropertyTab(){
+    private void setPropertyTab() {
         tab.selectedProperty().addListener((observable,oldValue,newValue) -> {
             if(newValue){
-                ControllersArchive.setCurrentTab(currentTab);
+                ControllersArchive.setCurrentTabController(currentTab);
             }
 
         });

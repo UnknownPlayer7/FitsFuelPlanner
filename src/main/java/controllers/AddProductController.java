@@ -85,7 +85,9 @@ public class AddProductController {
     @FXML
     void saveProduct(ActionEvent event) {
         Goods product = createProduct();
+
         if (product == null) return;
+
         if(Save.saveProduct(product))
             NotificationManager.showSuccessfulInfo(InfoType.SUCCESSFUL_SAVE);
         else
@@ -93,13 +95,14 @@ public class AddProductController {
     }
 
     @FXML
-    void addProduct(ActionEvent event){
+    void addProduct(ActionEvent event) {
         Goods product = createProduct();
+
         if(product != null)
-            ControllersArchive.getCurrentTab().addProduct(product);
+            ControllersArchive.getCurrentTabController().addProduct(product);
     }
 
-    private Goods createProduct(){
+    private Goods createProduct() {
         try{
             String name = this.name.getText();
             String productsKey = this.productsKey.getText();
@@ -118,11 +121,11 @@ public class AddProductController {
     }
 
     private String getButtonStatus(RadioButton firstButton, RadioButton secondButton) {
-        if(firstButton.isSelected()){
+        if (firstButton.isSelected()) {
             return  convertTextFromButton(firstButton);
-        }else if(secondButton.isSelected()){
+        } else if (secondButton.isSelected()) {
             return  convertTextFromButton(secondButton);
-        }else {
+        } else {
             throw new NullPointerException();
         }
     }

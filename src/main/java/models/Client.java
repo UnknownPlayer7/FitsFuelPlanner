@@ -7,8 +7,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 
 public class Client extends BagWithProducts implements Serializable {
 
@@ -20,35 +19,27 @@ public class Client extends BagWithProducts implements Serializable {
         createStorageProduct(tabPane);
     }
 
-    public String getName() {
-        return this.name;
-    }
-
-    public HashMap<Integer, ArrayList<Goods>> getMap() {
-        return map;
-    }
-
-    public void setMap(HashMap<Integer, ArrayList<Goods>> map) {
-        this.map = map;
-    }
-
-    public void createStorageProduct(TabPane tabPane){
+    private void createStorageProduct(TabPane tabPane) {
         HashMap<Integer, ArrayList<Goods>> map = new HashMap<>();
-        TableView tableView;
+        TableView<?> tableView;
         AnchorPane anchorPane;
         Goods product;
+
         int i=0;
-        for(Tab tab: tabPane.getTabs()){
+        for (Tab tab: tabPane.getTabs()) {
             Node content = tab.getContent();
-            if(content instanceof AnchorPane){
+
+            if (content instanceof AnchorPane) {
                 anchorPane = (AnchorPane) content;
-                for(Node content2:anchorPane.getChildren()){
-                    if(content2 instanceof TableView){
+
+                for (Node content2:anchorPane.getChildren()) {
+                    if (content2 instanceof TableView) {
                         i++;
-                        tableView =(TableView) content2;
+                        tableView =(TableView<?>) content2;
                         ArrayList<Goods> products = new ArrayList<>();
-                        for(Object object2: tableView.getItems()){
-                            if(object2 instanceof Goods){
+
+                        for (Object object2: tableView.getItems()) {
+                            if (object2 instanceof Goods) {
                                 product = (Goods) object2;
                                 products.add(product);
                             }
@@ -63,4 +54,15 @@ public class Client extends BagWithProducts implements Serializable {
         setMap(map);
     }
 
+    public String getName() {
+        return this.name;
+    }
+
+    public HashMap<Integer, ArrayList<Goods>> getMap() {
+        return map;
+    }
+
+    public void setMap(HashMap<Integer, ArrayList<Goods>> map) {
+        this.map = map;
+    }
 }

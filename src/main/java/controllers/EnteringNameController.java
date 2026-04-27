@@ -26,10 +26,11 @@ public class EnteringNameController {
     @FXML
     void enter(KeyEvent key) {
 
-        if(key.getCode() == KeyCode.ENTER){
+        if(key.getCode() == KeyCode.ENTER) {
             this.name = textField.getText();
             ControllersArchive.setEnteringNameController(this);
             TabPane tabPane = ControllersArchive.getWorkspaceController().getTabPane();
+
             if(Save.saveClient(new Client(textField.getText(),tabPane))){
                 NotificationManager.showSuccessfulInfo(InfoType.SUCCESSFUL_SAVE);
             } else

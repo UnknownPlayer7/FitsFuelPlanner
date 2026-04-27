@@ -17,7 +17,7 @@ public class Goods implements Serializable {
     private String oldAmountOfProduct;
 
     public Goods(String name, double amountOfEnergy, double protein,String typeOfProtein,
-                 double carb,String typeOfCarb, double fat, String typeOfFat, String key){
+                 double carb,String typeOfCarb, double fat, String typeOfFat, String key) {
         this.name = name;
         this.amountOfEnergy = amountOfEnergy;
         this.carb = carb;
@@ -31,7 +31,7 @@ public class Goods implements Serializable {
         this.oldAmountOfProduct = this.amountOfProduct;
     }
 
-    public Goods(Goods product){
+    public Goods(Goods product) {
         this.name = product.getName();
         this.amountOfEnergy = product.getAmountOfEnergy();
         this.carb = product.getCarb();

@@ -40,7 +40,7 @@ public class Loader {
             list = FXCollections.observableArrayList();
             tab.addToListProduct(list);
         }
-        ControllersArchive.setCurrentTab(tab);
+        ControllersArchive.setCurrentTabController(tab);
 
 
 
