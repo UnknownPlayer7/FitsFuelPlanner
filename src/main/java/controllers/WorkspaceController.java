@@ -85,6 +85,7 @@ public class WorkspaceController extends NewTabController implements Initializab
     public void createNewTab() {
         Tab newTab;
         amountOfTabs++;
+
         if (amountOfTabs == 1) {
             newTab = new Tab("Завтрак");
         } else if (amountOfTabs == 2) {
@@ -92,9 +93,11 @@ public class WorkspaceController extends NewTabController implements Initializab
         } else if (amountOfTabs == 3) {
             newTab = new Tab("Ужин");
         } else newTab = new Tab("Перекус "+(amountOfTabs-3));
-        Loader.setCurrentTab(newTab);
+
+        TableCreator.setCurrentTab(newTab);
         tabPane.getTabs().add(tabPane.getTabs().size() - 1, newTab);
         tabPane.getSelectionModel().select(newTab);
+
         FXMLLoader fxmlLoader = new FXMLLoader(WorkspaceController.class.getResource("/FXML/NewTab-view.fxml"));
         try {
             Scene scene = new Scene(fxmlLoader.load(), 735, 377);
@@ -165,7 +168,7 @@ public class WorkspaceController extends NewTabController implements Initializab
     void toMenu(ActionEvent event) {
 
         try{
-            Loader.setCountOfTabs(1);
+            TableCreator.setCountOfTabs(1);
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/MainMenu-view.fxml"));
             Parent root = fxmlLoader.load();
             Scene scene = new Scene(root);

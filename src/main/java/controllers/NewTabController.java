@@ -16,7 +16,7 @@ import models.Goods;
 import models.Client;
 import utils.StringUpdater;
 import utils.ControllersArchive;
-import utils.Loader;
+import utils.TableCreator;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -171,9 +171,9 @@ public class NewTabController implements Initializable {
             setPropertyBoxes();
             setPropertyTable(table);
             Client client = ControllersArchive.getWorkspaceController().getClient();
-            tab = Loader.getCurrentTab();
+            tab = TableCreator.getCurrentTab();
             setPropertyTab();
-            Loader.buildTables(client,this);
+            TableCreator.buildTables(client,this);
         });
 
     }
